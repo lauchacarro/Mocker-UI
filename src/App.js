@@ -1,9 +1,9 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Loading from '../src/components/Loading'
+import Loading from './components/Loading'
 const Home = lazy(() => import('./pages/Home'));
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Suspense fallback={<Loading/>}>
       <Router>

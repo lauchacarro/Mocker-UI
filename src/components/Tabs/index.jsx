@@ -8,14 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import DropzoneArea from '../DropzoneArea';
-interface TabPanelProps {
-    children?: React.ReactNode;
-    dir?: string;
-    index: any;
-    value: any;
-}
+import MockTab from './MockTab';
 
-function TabPanel(props: TabPanelProps) {
+
+function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -32,14 +28,14 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-function a11yProps(index: any) {
+function a11yProps(index) {
     return {
         id: `full-width-tab-${index}`,
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         // backgroundColor: theme.palette.background.paper,
         height: 500,
@@ -47,21 +43,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-interface OnFetchProp {
-    onFetch: (files: any) => void;
-
-}
-
 export default function FullWidthTabs() {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
-    function handleChange(event: React.ChangeEvent<{}>, newValue: number) {
+    function handleChange(event, newValue) {
         setValue(newValue);
     }
 
-    function handleChangeIndex(index: number) {
+    function handleChangeIndex(index) {
         setValue(index);
     }
 
@@ -85,8 +76,8 @@ export default function FullWidthTabs() {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    Item One
-        </TabPanel>
+                  <MockTab/>
+                </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
                     <DropzoneArea/>
                 </TabPanel>

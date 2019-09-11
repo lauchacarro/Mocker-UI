@@ -21,7 +21,7 @@ import Tabs from '../../components/Tabs';
 
 import useStyles from './styles'
 
-const Home: React.FC = () => {
+const Home = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);

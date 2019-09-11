@@ -1,0 +1,16 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  .hide {
+    display: none !important;
+  }
+  #script-editor-0{
+      width: 100% !important;
+      height: 100% !important;
+  }
+  .ace_warning,
+  .ace_error {
+    background: none !important;
+  }
