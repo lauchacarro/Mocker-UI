@@ -46,7 +46,7 @@ export default function DropzoneDialogExample() {
                 .then(response => {
                     setLoading(false)
                     setOpenDialog(true);
-                    setDownloadLink("https://mocker-desa.herokuapp.com/api/files/" + response.replace('"',''))
+                    setDownloadLink("https://mocker-desa.herokuapp.com/api/files/" + response.replace('"','').replace('"',''))
                 });
         }
 

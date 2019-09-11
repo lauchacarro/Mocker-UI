@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import SandBox from '../../SandBox'
 import Loading from '../../Loading'
 import Button from '@material-ui/core/Button';
+import ContentTypeSelect from '../../Selects/ContentTypeSelect'
+import StatusCodeSelect from '../../Selects/StatusCodeSelect'
 const MockTab = () => {
 
     const [mock, setMock] = useState('')
@@ -15,6 +17,8 @@ const MockTab = () => {
 
     return (
         <div>
+            <ContentTypeSelect/>
+            <StatusCodeSelect/>
             <SandBox handleChangeSandBox={handleChangeSandBox} />
             <Button onClick={handleClick} color="primary">
                 Create Mock
