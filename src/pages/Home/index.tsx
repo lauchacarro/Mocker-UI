@@ -18,14 +18,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Tabs from '../../components/Tabs';
-import Loading from '../../components/Loading'
+
 import useStyles from './styles'
 
 const Home: React.FC = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false)
+
 
   function handleDrawerOpen() {
     setOpen(true);
@@ -33,10 +33,6 @@ const Home: React.FC = () => {
 
   function handleDrawerClose() {
     setOpen(false);
-  }
-
-  function handleLoading(value: boolean) {
-    setLoading(value)
   }
 
   return (
@@ -106,9 +102,10 @@ const Home: React.FC = () => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-        {isLoading ? <Loading /> : <Tabs onFetch={handleLoading}/>}
+        <Tabs />
 
       </main>
+
     </div>
   );
 }

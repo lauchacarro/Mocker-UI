@@ -52,7 +52,7 @@ interface OnFetchProp {
 
 }
 
-export default function FullWidthTabs(props: OnFetchProp) {
+export default function FullWidthTabs() {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
@@ -88,7 +88,7 @@ export default function FullWidthTabs(props: OnFetchProp) {
                     Item One
         </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <DropzoneArea onFetch={props.onFetch}/>
+                    <DropzoneArea/>
                 </TabPanel>
             </SwipeableViews>
         </Paper>
