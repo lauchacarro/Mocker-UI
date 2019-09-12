@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper';
 import DropzoneArea from '../DropzoneArea';
 import MockTab from './MockTab';
 
-
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -37,7 +36,6 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: 800,
         flexGrow: 1
     }
 }));
