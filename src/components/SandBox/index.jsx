@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Sandbox, withDependencies } from 'react-sandbox-editor'
 import './styles.css'
 
@@ -8,19 +8,25 @@ const ReactSandbox = withDependencies([
 ])(Sandbox)
 const SandBox = (props) => {
   const value = '{"Hello" : "World"}'
-  
+
   // const changeValue = (value) => {
-   
+
   //   props.handleChangeSandBox(value)
-    
+
   // }
+  useEffect(() => {
+    document.getElementsByClassName('react-sandbox-editor40')[0].remove()
+    document.getElementsByClassName('react-sandbox-editor81 react-sandbox-editor41')[0].style.height = "100%"
+    document.getElementsByClassName('react-sandbox-editor82 react-sandbox-editor41')[0].style.height = "100%"
+
+  }, [])
+
   return (
     <ReactSandbox
       classes={{
         header: "hide"
       }}
       displayMode="horizontal-split"
-
       selectedTab="scriptTab"
       onDisplayModeButtonClick={function () { }}
       onCodeChange={props.handleChangeSandBox}

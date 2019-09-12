@@ -37,10 +37,9 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // backgroundColor: theme.palette.background.paper,
         height: 800,
         flexGrow: 1
-    },
+    }
 }));
 
 export default function FullWidthTabs() {
@@ -75,7 +74,7 @@ export default function FullWidthTabs() {
                 index={value}
                 onChangeIndex={handleChangeIndex}
             >
-                <TabPanel value={value} index={0} dir={theme.direction} className={classes.root}>
+                <TabPanel value={value} index={0} dir={theme.direction}>
                   <MockTab/>
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>

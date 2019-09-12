@@ -47,18 +47,16 @@ const ContentTypeSelect = props => {
                     id: 'type-simple',
                 }}
             >
-                <MenuItem value={"application/json"}>application/json</MenuItem>
-                <MenuItem value={"application/x-www-form-urlencoded"}>application/x-www-form-urlencoded</MenuItem>
-                <MenuItem value={"application/xhtml+xml"}>application/xhtml+xml</MenuItem>
-                <MenuItem value={"application/xml"}>application/xml</MenuItem>
-                <MenuItem value={"application/javascript"}>application/javascript</MenuItem>
-                <MenuItem value={"multipart/form-data"}>multipart/form-data</MenuItem>
-                <MenuItem value={"text/css"}>text/css</MenuItem>
-                <MenuItem value={"text/csv"}>text/csv</MenuItem>
-                <MenuItem value={"text/html"}>text/html</MenuItem>
-                <MenuItem value={"text/json"}>text/json</MenuItem>
-                <MenuItem value={"text/plain"}>application/xhtml+xml</MenuItem>
-                <MenuItem value={"text/xml"}>application/xhtml+xml</MenuItem>
+                <MenuItem value={"application/json"}>JSON</MenuItem>
+                {/* <MenuItem value={"application/x-www-form-urlencoded"}>application/x-www-form-urlencoded</MenuItem> */}
+                <MenuItem value={"text/html"}>HTML</MenuItem>
+                <MenuItem value={"application/xhtml+xml"}>XHTML</MenuItem>
+                <MenuItem value={"application/xml"}>XML</MenuItem>
+                <MenuItem value={"application/javascript"}>Javascript</MenuItem>
+                <MenuItem value={"multipart/form-data"}>Form Data</MenuItem>
+                <MenuItem value={"text/css"}>CSS</MenuItem>
+                <MenuItem value={"text/csv"}>CSV</MenuItem>
+                <MenuItem value={"text/plain"}>Text Plain</MenuItem>
             </Select>
         </FormControl>
     )

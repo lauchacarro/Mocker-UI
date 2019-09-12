@@ -3,6 +3,7 @@ import SandBox from '../../SandBox'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import ContentTypeSelect from '../../Selects/ContentTypeSelect'
 import StatusCodeSelect from '../../Selects/StatusCodeSelect'
 
@@ -11,19 +12,19 @@ const useStyles = makeStyles(theme => ({
     gridContainer: {
         textAlign: "center"
     },
-    gridSandbox:{
-        paddingLeft:"25% !important", 
-        paddingRight:"25% !important",
-
+    gridSandbox: {
+        height: "50%"
     },
-    moduleBorderWrap :{
+    moduleBorderWrap: {
         maxWidth: "250px",
         padding: "1rem",
         position: "relative",
         background: "linear-gradient(to right, red, purple)",
         padding: "3px"
-      }
-    
+    },
+    hidden: {
+        visibility: "hidden"
+    }
 }));
 
 
@@ -40,21 +41,23 @@ const MockTab = () => {
     }
 
     return (
-        <Grid container spacing={3} className={classes.gridContainer}>
+        <Grid container className={classes.gridContainer}>
             <Grid item xs={12}>
                 <ContentTypeSelect />
                 <StatusCodeSelect />
             </Grid>
-
-            <Grid item xs={12} className={ classes.gridSandbox }>
-                <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap}/>
-
-                <Button onClick={handleClick} color="primary" variant="contained" size="large">
-                    Create Mock
-                    </Button>
+            <Grid container>
+                <Grid item md>
+                    <Paper className={classes.hidden}></Paper>
+                </Grid>
+                <Grid item md={6} className={classes.gridSandbox}>
+                    <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap} />
+                    <Button onClick={handleClick} color="primary" variant="contained" size="large">Create Mock</Button>
+                </Grid>
+                <Grid item md>
+                    <Paper className={classes.hidden} ></Paper>
+                </Grid>
             </Grid>
-
-
         </Grid>
     )
 }

@@ -23,7 +23,6 @@ export default function DropzoneDialogExample() {
         if (files && files.length > 0) {
             sendRequest(files[0])
         }
-
     }
 
     function handleCloseDialog() {
@@ -56,7 +55,6 @@ export default function DropzoneDialogExample() {
         <div>
             {isLoading ? <Loading /> :
                 <DropzoneArea
-                    acceptedFiles={['*']}
                     showPreviews={false}
                     maxFileSize={5000000}
                     filesLimit={1}
