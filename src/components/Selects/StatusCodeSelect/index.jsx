@@ -1,11 +1,14 @@
 import React from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Close from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -18,61 +21,70 @@ const useStyles = makeStyles(theme => ({
     },
     textField: {
         width: 200,
-    }
+    },
 }));
 
 const StatusCodeSelect = props => {
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        type: 200,
-        name: 'hai',
-    });
+    const [statusCode, setStatusCode] = React.useState(200);
     const [customState, setCustomState] = React.useState(false);
 
     function handleChange(event) {
         if (customState) {
-            console.log(event.type)
-            if (event.type != "change") {
-                setCustomState(false)
-            }
+            setStatusCode(event.target.value)
         }
         else {
             if (event.target.value == 0) {
                 setCustomState(true)
             }
             else {
-                setValues(oldValues => ({
-                    ...oldValues,
-                    [event.target.name]: event.target.value,
-                }));
+                setStatusCode(event.target.value)
             }
         }
-
-
-
     }
+
+    const handleClickShowPassword = () => {
+        setCustomState(false)
+    };
+
+    const handleMouseDownPassword = event => {
+        event.preventDefault();
+    };
     return (
         <FormControl className={classes.formControl}>
-            {!customState ? <InputLabel htmlFor="type-simple">Status Code</InputLabel> : null}
+            {!customState ? <InputLabel htmlFor="code-simple">Status Code</InputLabel> : null}
             {customState ?
                 <TextField
-                    id="standard-search"
-                    label="Search field"
-                    type="search"
-                    className={classes.textField}
-                    
+                    id="filled-adornment-password"
+                    className={clsx(classes.margin, classes.textField)}
+                    type='number'
+                    label="Custom Status Code"
+                    value={statusCode}
                     onChange={handleChange}
-                    InputLabelProps={{
-                        shrink: true,
-                      }}
-                  />
+                    name="code"
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    edge="end"
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                >
+                                    <Close />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
                 :
                 <Select
-                    value={values.type}
+                    value={statusCode}
                     onChange={handleChange}
+                    className={classes.textField}
                     inputProps={{
-                        name: 'type',
-                        id: 'type-simple',
+                        name: 'code',
+                        id: 'code-simple'
                     }}
                 >
                     <MenuItem value={0}>Custom</MenuItem>

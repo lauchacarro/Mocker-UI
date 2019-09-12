@@ -3,7 +3,8 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: 'flex'
+      
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) =>
     },
     menuButton: {
       marginRight: 36,
+      color:"white"
     },
     hide: {
       display: 'none',

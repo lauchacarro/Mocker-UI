@@ -17,7 +17,7 @@ export default function DropzoneDialogExample() {
 
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
-      });
+    });
 
     const handleSave = (files) => {
         if (files && files.length > 0) {
@@ -46,7 +46,7 @@ export default function DropzoneDialogExample() {
                 .then(response => {
                     setLoading(false)
                     setOpenDialog(true);
-                    setDownloadLink("https://mocker-desa.herokuapp.com/api/files/" + response.replace('"','').replace('"',''))
+                    setDownloadLink("https://mocker-desa.herokuapp.com/api/files/" + response.replace('"', '').replace('"', ''))
                 });
         }
 
@@ -56,6 +56,7 @@ export default function DropzoneDialogExample() {
         <div>
             {isLoading ? <Loading /> :
                 <DropzoneArea
+                    acceptedFiles={['*']}
                     showPreviews={false}
                     maxFileSize={5000000}
                     filesLimit={1}
@@ -84,7 +85,7 @@ export default function DropzoneDialogExample() {
                     </DialogActions>
                 </Dialog>
                 : null}
-        
+
         </div>
 
     );
