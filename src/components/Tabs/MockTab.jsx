@@ -69,7 +69,7 @@ const MockTab = () => {
                 onChangeIndex={handleChangeTabIndex}
             >
                 <TabPanel value={tabindex} index={0} dir={theme.direction}>
-                    <HttpMethodMock classes={classes} handleChangeSandBox={handleChangeSandBox} />
+                    <HttpMethodMock classes={classes} handleChangeSandBox={handleChangeSandBox} needCheck={false}/>
                 </TabPanel>
 
                 <TabPanel value={tabindex} index={1} dir={theme.direction}>

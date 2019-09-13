@@ -2,14 +2,28 @@ import React from 'react'
 import SandBox from '../SandBox'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ContentTypeSelect from '../Selects/ContentTypeSelect'
 import StatusCodeSelect from '../Selects/StatusCodeSelect'
 
 const HttpMethodMock = props => {
-    const { classes, handleChangeSandBox } = props;
+    const { classes, handleChangeSandBox, needCheck = true } = props;
     return (
         <Grid container className={classes.gridContainer}>
             <Grid item xs={12}>
+                {needCheck ?
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                // checked={state.checkedB}
+                                // onChange={handleChange('checkedB')}
+                                // value="checkedB"
+                                color="primary"
+                            />
+                        }
+                        label="Use"
+                    /> : null}
                 <ContentTypeSelect />
                 <StatusCodeSelect />
             </Grid>

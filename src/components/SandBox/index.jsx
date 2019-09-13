@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Sandbox, withDependencies } from 'react-sandbox-editor'
+import React, { useEffect } from 'react'
+import { Sandbox as ReactSandbox } from 'react-sandbox-editor'
 import './styles.css'
 
-const ReactSandbox = withDependencies([
-  'https://unpkg.com/react@16.6.0/umd/react.development.js',
-  'https://unpkg.com/react-dom@16.6.0/umd/react-dom.development.js'
-])(Sandbox)
 const SandBox = (props) => {
   const value = '{"Hello" : "World"}'
 
