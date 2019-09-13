@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { Sandbox as ReactSandbox } from 'react-sandbox-editor'
 import './styles.css'
 
-const SandBox = (props) => {
+const SandBox = props => {
   const value = '{"Hello" : "World"}'
-
+  const { disable } = props
   // const changeValue = (value) => {
 
   //   props.handleChangeSandBox(value)
@@ -38,7 +38,7 @@ const SandBox = (props) => {
       scriptEditor={{
         defaultValue: value,
         mode: 'javascript',
-        readOnly: false,
+        readOnly: disable,
         wrapLines: true
       }}
       templateEditor={{
@@ -47,7 +47,7 @@ const SandBox = (props) => {
         readOnly: false,
         wrapLines: false
       }}
-      theme="github"
+      theme={disable? "twilight" : "github"}
       executeOnCodeChange={false}
       executeOnCodeChangeDebounce={1000}
 

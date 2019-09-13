@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SandBox from '../SandBox'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -9,6 +9,7 @@ import StatusCodeSelect from '../Selects/StatusCodeSelect'
 
 const HttpMethodMock = props => {
     const { classes, handleChangeSandBox, needCheck = true } = props;
+    const [checked, setCheck] = useState(false)
     return (
         <Grid container className={classes.gridContainer}>
             <Grid item xs={12}>
@@ -16,23 +17,23 @@ const HttpMethodMock = props => {
                     <FormControlLabel
                         control={
                             <Checkbox
-                                // checked={state.checkedB}
-                                // onChange={handleChange('checkedB')}
+                                checked={checked}
+                                onChange={(event, value) => setCheck(value)}
                                 // value="checkedB"
                                 color="primary"
                             />
                         }
                         label="Use"
                     /> : null}
-                <ContentTypeSelect />
-                <StatusCodeSelect />
+                <ContentTypeSelect disable={needCheck && !checked}/>
+                <StatusCodeSelect disable={needCheck && !checked}/>
             </Grid>
             <Grid container>
                 <Grid item md>
                     <Paper className={classes.hidden}></Paper>
                 </Grid>
                 <Grid item md={6} className={classes.gridSandbox}>
-                    <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap} />
+                    <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap} disable={needCheck && !checked}/>
                 </Grid>
                 <Grid item md>
                     <Paper className={classes.hidden} ></Paper>

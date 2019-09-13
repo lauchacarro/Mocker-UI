@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const StatusCodeSelect = props => {
+    const { disable } = props
     const classes = useStyles();
     const [statusCode, setStatusCode] = React.useState(200);
     const [customState, setCustomState] = React.useState(false);
@@ -51,7 +52,7 @@ const StatusCodeSelect = props => {
         event.preventDefault();
     };
     return (
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} disabled={disable}>
             {!customState ? <InputLabel htmlFor="code-simple">Status Code</InputLabel> : null}
             {customState ?
                 <TextField

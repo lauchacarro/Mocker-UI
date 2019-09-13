@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ContentTypeSelect = props => {
+    const { disable } = props
     const classes = useStyles();
     const [values, setValues] = React.useState({
         type: 'application/json',
@@ -30,7 +31,7 @@ const ContentTypeSelect = props => {
         }));
     }
     return (
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} disabled={disable}>
             <InputLabel htmlFor="type-simple">Content Type</InputLabel>
             <Select
                 value={values.type}
