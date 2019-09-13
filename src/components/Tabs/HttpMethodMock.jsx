@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import SandBox from '../SandBox'
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ContentTypeSelect from '../Selects/ContentTypeSelect'
 import StatusCodeSelect from '../Selects/StatusCodeSelect'
@@ -16,14 +16,14 @@ const HttpMethodMock = props => {
                 {needCheck ?
                     <FormControlLabel
                         control={
-                            <Checkbox
+                            <Switch
                                 checked={checked}
                                 onChange={(event, value) => setCheck(value)}
                                 // value="checkedB"
                                 color="primary"
                             />
                         }
-                        label="Use"
+                        label="Enable"
                     /> : null}
                 <ContentTypeSelect disable={needCheck && !checked}/>
                 <StatusCodeSelect disable={needCheck && !checked}/>
