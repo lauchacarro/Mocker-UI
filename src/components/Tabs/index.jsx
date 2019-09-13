@@ -1,38 +1,13 @@
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import DropzoneArea from '../DropzoneArea';
 import MockTab from './MockTab';
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <Typography
-            component="div"
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-        >
-            <Box p={3}>{children}</Box>
-        </Typography>
-    );
-}
-
-function a11yProps(index) {
-    return {
-        id: `full-width-tab-${index}`,
-        'aria-controls': `full-width-tabpanel-${index}`,
-    };
-}
+import TabPanel from './TabPanel'
+import AllTabProps from './AllTabProps'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,8 +38,8 @@ export default function FullWidthTabs() {
                 variant="fullWidth"
                 aria-label="full width tabs example"
             >
-                <Tab label="Mock" {...a11yProps(0)} />
-                <Tab label="File Cloud" {...a11yProps(1)} />
+                <Tab label="Mock" {...AllTabProps(0)} />
+                <Tab label="File Cloud" {...AllTabProps(1)} />
             </Tabs>
 
             <SwipeableViews

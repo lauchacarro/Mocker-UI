@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -24,12 +23,6 @@ const ContentTypeSelect = props => {
         name: 'hai',
     });
 
-    // const inputLabel = React.useRef(null);
-    // const [labelWidth, setLabelWidth] = React.useState(0);
-    // React.useEffect(() => {
-    //     setLabelWidth(inputLabel.current.offsetWidth);
-    // }, []);
-
     function handleChange(event) {
         setValues(oldValues => ({
             ...oldValues,
@@ -48,7 +41,6 @@ const ContentTypeSelect = props => {
                 }}
             >
                 <MenuItem value={"application/json"}>JSON</MenuItem>
-                {/* <MenuItem value={"application/x-www-form-urlencoded"}>application/x-www-form-urlencoded</MenuItem> */}
                 <MenuItem value={"text/html"}>HTML</MenuItem>
                 <MenuItem value={"application/xhtml+xml"}>XHTML</MenuItem>
                 <MenuItem value={"application/xml"}>XML</MenuItem>
