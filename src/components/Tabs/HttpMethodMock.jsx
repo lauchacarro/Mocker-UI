@@ -6,6 +6,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ContentTypeSelect from '../Selects/ContentTypeSelect'
 import StatusCodeSelect from '../Selects/StatusCodeSelect'
+import HeaderPanel from '../HeaderPanel'
 
 const HttpMethodMock = props => {
     const { classes, handleChangeSandBox, needCheck = true } = props;
@@ -37,6 +38,7 @@ const HttpMethodMock = props => {
                 </Grid>
                 <Grid item md>
                     <Paper className={classes.hidden} ></Paper>
+                    <HeaderPanel/>
                 </Grid>
             </Grid>
         </Grid>
