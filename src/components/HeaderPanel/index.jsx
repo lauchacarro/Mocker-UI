@@ -35,16 +35,22 @@ const useStyles = makeStyles(theme => ({
 const HeaderPanel = props => {
     const [expanded, setExpanded] = React.useState('panel1');
     const [headers, setHeaders] = React.useState([])
-    const [header, setheader] = React.useState({ key: "", value: "" })
+    const [header, setheader] = React.useState({ keyH: "", valueH: "" })
     const classes = useStyles();
     const handleChange = panel => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
     };
     const handleAddHeader = event => {
-        setHeaders([...headers, header])
+        if (header.keyH.toString().replace(/\s/g, '').length > 0) {
+            setHeaders([...headers, header])
+            setheader({ keyH: "", valueH: "" })
+        }
     }
     const handleHeaderOnChange = event => {
         setheader({ ...header, [event.target.name]: [event.target.value] })
+    }
+    const handleRemoveHeader = index => event => {
+        setHeaders(headers.filter((value, indexHeader) => indexHeader != index))
     }
     return (
         <div className={classes.root} >
@@ -52,40 +58,32 @@ const HeaderPanel = props => {
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
-                    id="panel1a-header"
                 >
                     <Typography className={classes.heading}>Custom Headers</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Grid container spacing={3}>
-
                         <Grid container spacing={3}>
                             <Grid item xs={6}>
                                 <TextField
-                                    id="filled-adornment-password"
                                     className={clsx(classes.margin, classes.textField)}
-
-                                    value={header.key}
+                                    value={header.keyH}
                                     onChange={handleHeaderOnChange}
-                                    name="key"
+                                    name="keyH"
                                 />
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
-                                    id="filled-adornment-password"
                                     className={clsx(classes.margin, classes.textField)}
-
-                                    value={header.value}
+                                    value={header.valueH}
                                     onChange={handleHeaderOnChange}
-                                    name="value"
+                                    name="valueH"
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
                                                 <IconButton
                                                     edge="end"
-                                                    aria-label="toggle password visibility"
                                                     onClick={handleAddHeader}
-                                                // onMouseDown={handleMouseDownPassword}
                                                 >
                                                     <Add />
                                                 </IconButton>
@@ -95,33 +93,26 @@ const HeaderPanel = props => {
                                 />
                             </Grid>
                         </Grid>
-                        {headers.map(function (header) {
+                        {headers.map(function (header, index) {
                             return <Grid container spacing={3} className={classes.gridHeaderAdded}>
                                 <Grid item xs={6}>
                                     <TextField
-                                        id="filled-adornment-password"
                                         className={clsx(classes.margin, classes.textField)}
-                                        disable
-                                        value={header.key}
-                                        // onChange={handleChange}
-                                        name="code"
-                                    /></Grid>
+                                        disabled
+                                        value={header.keyH}
+                                    />
+                                </Grid>
                                 <Grid item xs={6}>
                                     <TextField
-                                        id="filled-adornment-password"
                                         className={clsx(classes.margin, classes.textField)}
-                                        disable
-                                        value={header.value}
-                                        // onChange={handleChange}
-                                        name="code"
+                                        disabled
+                                        value={header.valueH}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">
                                                     <IconButton
                                                         edge="end"
-                                                        aria-label="toggle password visibility"
-                                                     onClick={handleClickShowPassword}
-                                                    // onMouseDown={handleMouseDownPassword}
+                                                        onClick={handleRemoveHeader(index)}
                                                     >
                                                         <Remove />
                                                     </IconButton>
