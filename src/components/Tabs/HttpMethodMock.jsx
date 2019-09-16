@@ -30,14 +30,14 @@ const HttpMethodMock = props => {
                 <StatusCodeSelect disable={needCheck && !checked}/>
             </Grid>
             <Grid container>
-                <Grid item md>
+                {/* <Grid item md>
                     <Paper className={classes.hidden}></Paper>
-                </Grid>
+                </Grid> */}
                 <Grid item md={6} className={classes.gridSandbox}>
                     <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap} disable={needCheck && !checked}/>
                 </Grid>
                 <Grid item md>
-                    <Paper className={classes.hidden} ></Paper>
+                    
                     <HeaderPanel/>
                 </Grid>
             </Grid>
