@@ -25,21 +25,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const StatusCodeSelect = props => {
-    const { disable } = props
+    const { disable, handleChangeStatusCode, value } = props
     const classes = useStyles();
-    const [statusCode, setStatusCode] = React.useState(200);
     const [customState, setCustomState] = React.useState(false);
 
     function handleChange(event) {
         if (customState) {
-            setStatusCode(event.target.value)
+            handleChangeStatusCode(event)
         }
         else {
             if (event.target.value == 0) {
                 setCustomState(true)
             }
             else {
-                setStatusCode(event.target.value)
+                handleChangeStatusCode(event)
             }
         }
     }
@@ -60,9 +59,9 @@ const StatusCodeSelect = props => {
                     className={clsx(classes.margin, classes.textField)}
                     type='number'
                     label="Custom Status Code"
-                    value={statusCode}
+                    value={value}
                     onChange={handleChange}
-                    name="code"
+                    name="StatusCode"
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -80,11 +79,11 @@ const StatusCodeSelect = props => {
                 />
                 :
                 <Select
-                    value={statusCode}
+                    value={value}
                     onChange={handleChange}
                     className={classes.textField}
                     inputProps={{
-                        name: 'code',
+                        name: 'StatusCode',
                         id: 'code-simple'
                     }}
                 >

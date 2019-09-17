@@ -4,12 +4,8 @@ import './styles.css'
 
 const SandBox = props => {
   const value = '{"Hello" : "World"}'
-  const { disable } = props
-  // const changeValue = (value) => {
+  const { disable, handleChangeSandBox } = props
 
-  //   props.handleChangeSandBox(value)
-
-  // }
   useEffect(() => {
     document.getElementsByClassName('react-sandbox-editor40')[0].remove()
     document.getElementsByClassName('react-sandbox-editor81 react-sandbox-editor41')[0].style.height = "100%"
@@ -25,7 +21,7 @@ const SandBox = props => {
       displayMode="horizontal-split"
       selectedTab="scriptTab"
       onDisplayModeButtonClick={function () { }}
-      onCodeChange={props.handleChangeSandBox}
+      onCodeChange={handleChangeSandBox}
       permissions={[
         'allow-pointer-lock',
         'allow-forms',

@@ -17,27 +17,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ContentTypeSelect = props => {
-    const { disable } = props
+    const { disable, handleChangeContentType, value } = props
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        type: 'application/json',
-        name: 'hai',
-    });
 
-    function handleChange(event) {
-        setValues(oldValues => ({
-            ...oldValues,
-            [event.target.name]: event.target.value,
-        }));
-    }
     return (
         <FormControl className={classes.formControl} disabled={disable}>
             <InputLabel htmlFor="type-simple">Content Type</InputLabel>
             <Select
-                value={values.type}
-                onChange={handleChange}
+                value={value}
+                onChange={handleChangeContentType}
                 inputProps={{
-                    name: 'type',
+                    name: 'ContentType',
                     id: 'type-simple',
                 }}
             >

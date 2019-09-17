@@ -9,8 +9,9 @@ import StatusCodeSelect from '../Selects/StatusCodeSelect'
 import HeaderPanel from '../HeaderPanel'
 
 const HttpMethodMock = props => {
-    const { classes, handleChangeSandBox, needCheck = true } = props;
-    const [checked, setCheck] = useState(false)
+    const { classes, handleChangeSandBox, handleChangeSelect, handleChangeSwitch, handleChangeHeaders, mock, needCheck = true } = props;
+    const checked = mock.Active;
+
     return (
         <Grid container className={classes.gridContainer}>
             <Grid item xs={12}>
@@ -18,27 +19,28 @@ const HttpMethodMock = props => {
                     <FormControlLabel
                         control={
                             <Switch
-                                checked={checked}
-                                onChange={(event, value) => setCheck(value)}
-                                // value="checkedB"
+                                checked={mock.Active}
+                                onChange={handleChangeSwitch}
+                                inputProps={{
+                                    name: 'Active'
+                                }}
                                 color="primary"
                             />
                         }
                         label="Enable"
                     /> : null}
-                <ContentTypeSelect disable={needCheck && !checked}/>
-                <StatusCodeSelect disable={needCheck && !checked}/>
+                <ContentTypeSelect disable={needCheck && !checked} value={mock.ContentType} handleChangeContentType={handleChangeSelect} />
+                <StatusCodeSelect disable={needCheck && !checked} value={mock.StatusCode} handleChangeStatusCode={handleChangeSelect} />
             </Grid>
             <Grid container>
                 {/* <Grid item md>
                     <Paper className={classes.hidden}></Paper>
                 </Grid> */}
                 <Grid item md={6} className={classes.gridSandbox}>
-                    <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap} disable={needCheck && !checked}/>
+                    <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap} disable={needCheck && !checked} />
                 </Grid>
                 <Grid item md>
-                    
-                    <HeaderPanel/>
+                    <HeaderPanel disabled={needCheck && !checked} headers={mock.Headers} handleChangeHeaders={handleChangeHeaders}/>
                 </Grid>
             </Grid>
         </Grid>

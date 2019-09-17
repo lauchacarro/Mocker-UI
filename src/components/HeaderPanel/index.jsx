@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
     root: {
         width: '75%',
         paddingLeft: "1vh",
-        margin: "0 auto"
+        margin: "0 auto",
+        maxHeight:"100px"
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
@@ -33,16 +34,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const HeaderPanel = props => {
-    const [expanded, setExpanded] = React.useState('panel1');
-    const [headers, setHeaders] = React.useState([])
+    const { disabled, handleChangeHeaders, headers } = props
+
     const [header, setheader] = React.useState({ keyH: "", valueH: "" })
     const classes = useStyles();
-    const handleChange = panel => (event, newExpanded) => {
-        setExpanded(newExpanded ? panel : false);
-    };
+ 
     const handleAddHeader = event => {
         if (header.keyH.toString().replace(/\s/g, '').length > 0) {
-            setHeaders([...headers, header])
+            handleChangeHeaders([...headers, header])
             setheader({ keyH: "", valueH: "" })
         }
     }
@@ -50,11 +49,11 @@ const HeaderPanel = props => {
         setheader({ ...header, [event.target.name]: [event.target.value] })
     }
     const handleRemoveHeader = index => event => {
-        setHeaders(headers.filter((value, indexHeader) => indexHeader != index))
+        handleChangeHeaders(headers.filter((value, indexHeader) => indexHeader != index))
     }
     return (
         <div className={classes.root} >
-            <ExpansionPanel TransitionProps={{ unmountOnExit: true }} >
+            <ExpansionPanel TransitionProps={{ unmountOnExit: true }} disabled={disabled}>
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
