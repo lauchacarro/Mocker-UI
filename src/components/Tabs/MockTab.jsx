@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import TabPanel from './TabPanel'
 import AllTabProps from './AllTabProps'
 import HttpMethodMock from './HttpMethodMock'
+import { validateJson, validateXML } from '../../helpers/Validations'
 
 const useStyles = makeStyles(theme => ({
     gridContainer: {
@@ -24,6 +25,10 @@ const useStyles = makeStyles(theme => ({
     },
     hidden: {
         visibility: "hidden"
+    },
+    buttonCreate: {
+        textAlign: "center",
+        width: "100%"
     }
 }));
 
@@ -44,7 +49,8 @@ const MockTab = () => {
     const [tabindex, setTabindex] = React.useState(0);
     const theme = useTheme();
     const handleClick = () => {
-        console.log(mockPut)
+        // console.log(mockPut)
+        validateBody()
 
     }
     const handleChangeHeaders = method => (headers) => {
@@ -88,6 +94,20 @@ const MockTab = () => {
     function handleChangeTabIndex(index) {
         setTabindex(index);
     }
+    const validateBody = () => {
+        if(validateJson(mockGet.Body)){
+            alert("GET es JSON")
+        }
+        else{
+            alert("GET no es Json")
+        }
+        if(validateXML(mockGet.Body)){
+            alert("GET es XML")
+        }
+        else{
+            alert("GET no es XML")
+        }
+    }
     return (
         <div>
             <Tabs
@@ -129,7 +149,7 @@ const MockTab = () => {
                     <HttpMethodMock classes={classes} mock={mockDelete} handleChangeSandBox={handleChangeSandBox("DELETE")} handleChangeSelect={handleChangeSelect("DELETE")} handleChangeSwitch={handleChangeSwitch("DELETE")} handleChangeHeaders={handleChangeHeaders("DELETE")} />
                 </TabPanel>
             </SwipeableViews>
-            <Button onClick={handleClick} color="primary" variant="contained" size="large">Create Mock</Button>
+            <Button onClick={handleClick} className={classes.buttonCreate} color="primary" variant="contained" size="large">Create Mock</Button>
         </div>
     )
 }
