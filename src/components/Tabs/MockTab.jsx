@@ -48,84 +48,39 @@ const MockTab = () => {
 
     }
     const handleChangeHeaders = method => (headers) => {
-        switch (method) {
-            case "GET":
-                setMockGet({ ...mockGet, Headers: headers })
-                break;
-            case "POST":
-                setMockPost({ ...mockPost, Headers: headers })
-                break;
-            case "PUT":
-                setMockPut({ ...mockPut, Headers: headers })
-                break;
-            case "PATCH":
-                setMockPatch({ ...mockPatch, Headers: headers })
-                break;
-            case "DELETE":
-                setMockDelete({ ...mockDelete, Headers: headers })
-                break;
-        }
+        changeMock(method, "Headers", headers)
     }
+
     const handleChangeSandBox = method => (editorName, value) => {
-        switch (method) {
-            case "GET":
-                setMockGet({ ...mockGet, Body: value })
-                break;
-            case "POST":
-                setMockPost({ ...mockPost, Body: value })
-                break;
-            case "PUT":
-                setMockPut({ ...mockPut, Body: value })
-                break;
-            case "PATCH":
-                setMockPatch({ ...mockPatch, Body: value })
-                break;
-            case "DELETE":
-                setMockDelete({ ...mockDelete, Body: value })
-                break;
-        }
+        changeMock(method, "Body", value)
     }
 
     const handleChangeSelect = method => (event) => {
-        switch (method) {
-            case "GET":
-                setMockGet({ ...mockGet, [event.target.name]: event.target.value })
-                break;
-            case "POST":
-                setMockPost({ ...mockPost, [event.target.name]: event.target.value })
-                break;
-            case "PUT":
-                setMockPut({ ...mockPut, [event.target.name]: event.target.value })
-                break;
-            case "PATCH":
-                setMockPatch({ ...mockPatch, [event.target.name]: event.target.value })
-                break;
-            case "DELETE":
-                setMockDelete({ ...mockDelete, [event.target.name]: event.target.value })
-                break;
-        }
+        changeMock(method, event.target.name, event.target.value)
     }
 
     const handleChangeSwitch = method => (event, value) => {
+        changeMock(method, "Active", value)
+    }
+    const changeMock = (method, name, value) => {
         switch (method) {
             case "GET":
-                setMockGet({ ...mockGet, Active: value })
+                setMockGet({ ...mockGet, [name]: value })
                 break;
             case "POST":
-                setMockPost({ ...mockPost, Active: value })
+                setMockPost({ ...mockPost, [name]: value })
                 break;
             case "PUT":
-                setMockPut({ ...mockPut, Active: value })
+                setMockPut({ ...mockPut, [name]: value })
                 break;
             case "PATCH":
-                setMockPatch({ ...mockPatch, Active: value })
+                setMockPatch({ ...mockPatch, [name]: value })
                 break;
             case "DELETE":
-                setMockDelete({ ...mockDelete, Active: value })
+                setMockDelete({ ...mockDelete, [name]: value })
                 break;
         }
     }
-
     function handleChangeTab(event, newValue) {
         setTabindex(newValue);
     }
