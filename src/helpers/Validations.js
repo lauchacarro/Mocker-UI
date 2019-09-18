@@ -12,7 +12,6 @@ export const validateJson = str => {
     }
 }
 
-
 //XML HTML and XHTML
 export const validateXML = text => {
 

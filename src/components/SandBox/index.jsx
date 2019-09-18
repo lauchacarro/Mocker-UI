@@ -7,11 +7,17 @@ const SandBox = props => {
   const { disable, handleChangeSandBox } = props
 
   useEffect(() => {
-    document.getElementsByClassName('react-sandbox-editor40')[0].remove()
-    document.getElementsByClassName('react-sandbox-editor81 react-sandbox-editor41')[0].style.height = "100%"
-    document.getElementsByClassName('react-sandbox-editor82 react-sandbox-editor41')[0].style.height = "100%"
+    if (document.getElementsByClassName('react-sandbox-editor40')[0]) {
+      document.getElementsByClassName('react-sandbox-editor40')[0].remove()
+    }
+    if (document.getElementsByClassName('react-sandbox-editor81 react-sandbox-editor41')[0]) {
+      document.getElementsByClassName('react-sandbox-editor81 react-sandbox-editor41')[0].style.height = "100%"
+    }
+    if (document.getElementsByClassName('react-sandbox-editor82 react-sandbox-editor41')[0]) {
+      document.getElementsByClassName('react-sandbox-editor82 react-sandbox-editor41')[0].style.height = "100%"
+    }
 
-  }, [])
+  })
 
   return (
     <ReactSandbox
@@ -43,9 +49,9 @@ const SandBox = props => {
         readOnly: false,
         wrapLines: false
       }}
-      theme={disable? "twilight" : "github"}
+      theme={disable ? "twilight" : "github"}
       executeOnCodeChange={false}
-      executeOnCodeChangeDebounce={1000}
+      executeOnCodeChangeDebounce={0}
 
     />
   )

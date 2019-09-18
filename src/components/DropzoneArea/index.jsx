@@ -7,8 +7,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-
+import { CreateFile } from '../Api'
 import Loading from '../Loading'
+import { config } from '../Api/config'
 
 export default function DropzoneDialogExample() {
     const [openDialog, setOpenDialog] = React.useState();
@@ -33,19 +34,12 @@ export default function DropzoneDialogExample() {
 
         if (!openDialog) {
 
-            const formData = new FormData();
-            formData.append("file", file, file.name);
-
-
             setLoading(true)
-            fetch("https://mocker-desa.herokuapp.com/api/files", {
-                method: 'POST',
-                body: formData
-            }).then(response => response.text())
+            CreateFile(file).then(response => response.json())
                 .then(response => {
                     setLoading(false)
                     setOpenDialog(true);
-                    setDownloadLink("https://mocker-desa.herokuapp.com/api/files/" + response.replace('"', '').replace('"', ''))
+                    setDownloadLink(config.Url + "api/files/" + response.guid)
                 });
         }
 
