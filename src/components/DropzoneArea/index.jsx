@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Button from '@material-ui/core/Button';
-import { DropzoneArea } from 'material-ui-dropzone'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,7 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import { CreateFile } from '../Api'
 import Loading from '../Loading'
 import { config } from '../Api/config'
-
+import ToyZone from "./ToyZone";
 export default function DropzoneDialogExample() {
     const [openDialog, setOpenDialog] = React.useState();
     const [downloadLink, setDownloadLink] = React.useState('');
@@ -48,11 +47,9 @@ export default function DropzoneDialogExample() {
     return (
         <div>
             {isLoading ? <Loading /> :
-                <DropzoneArea
-                    showPreviews={false}
-                    maxFileSize={5000000}
-                    filesLimit={1}
-                    onChange={handleSave} />}
+                
+                <ToyZone onFilesAdded={handleSave} />
+                    }
             {openDialog ?
                 <Dialog
                     open={openDialog}
