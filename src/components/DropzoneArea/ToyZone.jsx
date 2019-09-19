@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Loading from "../Loading";
+import UploadFile from '../../icons/UploadFile'
 import "./index.css";
 
 /**
@@ -111,7 +112,7 @@ class ToyZone extends Component {
           onChange={this.onFilesAdded}
         />
         <div className="drag-files">
-          {loading ? <Loading /> : "Drag files to upload"}
+          {loading ? <Loading /> : <div className="drop-zone-content"><UploadFile /> <p>Drag file to upload</p></div>}
         </div>
       </div>
     );
