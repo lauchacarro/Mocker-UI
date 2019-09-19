@@ -73,7 +73,7 @@ const MockTab = () => {
             .then(response => response.json()).then(response => {
                 setLoading(false)
                 setOpenDialog(true);
-                setDownloadLink(config.Url + "/api/" + response.guid)
+                setDownloadLink(config.Url + "api/" + response.guid)
             });
     }
     const handleChangeHeaders = method => (headers) => {

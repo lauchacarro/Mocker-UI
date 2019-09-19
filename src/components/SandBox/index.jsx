@@ -7,16 +7,31 @@ const SandBox = props => {
   const { disable, handleChangeSandBox } = props
 
   useEffect(() => {
-    if (document.getElementsByClassName('react-sandbox-editor40')[0]) {
-      document.getElementsByClassName('react-sandbox-editor40')[0].remove()
-    }
-    if (document.getElementsByClassName('react-sandbox-editor81 react-sandbox-editor41')[0]) {
-      document.getElementsByClassName('react-sandbox-editor81 react-sandbox-editor41')[0].style.height = "100%"
-    }
-    if (document.getElementsByClassName('react-sandbox-editor82 react-sandbox-editor41')[0]) {
-      document.getElementsByClassName('react-sandbox-editor82 react-sandbox-editor41')[0].style.height = "100%"
-    }
 
+    document.querySelectorAll('#tabs-content > div:nth-child(2) > :nth-child(2)').forEach(element => {
+      element.style.width = "100%"
+      element.style.height = "100%"
+    });
+
+    document.querySelectorAll('.makeStyles-gridSandbox-167 > div').forEach(element => {
+      element.style.width = "100%"
+      element.style.height = "100%"
+      element.style.position = "relative"
+      element.style.padding = "1px"
+      element.style.background = "linear-gradient(to right, rgb(4, 92, 255), rgb(255, 251, 0), rgb(197, 49, 12))"
+
+    });
+    document.querySelectorAll('#tabs-content > div:nth-child(4)').forEach(element => {
+      element.remove()
+    });
+
+    document.querySelectorAll('#tabs-content > div:nth-child(1)').forEach(element => {
+      element.style.height = "100%"
+    });
+
+    document.querySelectorAll('#tabs-content > div:nth-child(2)').forEach(element => {
+      element.style.height = "100%"
+    });
   })
 
   return (

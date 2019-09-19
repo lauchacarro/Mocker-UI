@@ -1,3 +1,3 @@
 export const config = {
-    Url: "https://localhost:44395/"
+    Url: "https://mocker-desa.herokuapp.com/"
 }

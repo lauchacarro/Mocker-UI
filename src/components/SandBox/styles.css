@@ -6,21 +6,9 @@
   .hide {
     display: none !important;
   }
-  #script-editor-0,
-  #script-editor-1,#script-editor-2,
-  #script-editor-3,#script-editor-4,
-  .react-sandbox-editor41{
-      width: 100% !important;
-      height: 100% !important;
-  }
   .ace_warning,
   .ace_error {
     background: none !important;
   }
 
-.react-sandbox-editor36{
-  position: relative;
-  background: linear-gradient(to right, rgb(4, 92, 255), rgb(255, 251, 0), rgb(197, 49, 12));
-  padding: 1px
-}
 

@@ -2,20 +2,20 @@ import { config } from './config'
 export const CreateMock = (mockGet, mockPost, mockPut, mockPatch, mockDelete) => {
     let mock = { Mocks: [] }
 
-    if (mockGet && mockGet.Active) {
-        mock.Mocks.push({ ...mockGet, HttpMethod: "GET" })
+    if (mockGet.Active) {
+        mock.Mocks.push(mockStateToMockRequest(mockGet, "GET"))
     }
-    if (mockPost && mockPost.Active) {
-        mock.Mocks.push({ ...mockPost, HttpMethod: "POST" })
+    if (mockPost.Active) {
+        mock.Mocks.push(mockStateToMockRequest(mockPost, "POST"))
     }
-    if (mockPut && mockPut.Active) {
-        mock.Mocks.push(mockPut)
+    if (mockPut.Active) {
+        mock.Mocks.push(mockStateToMockRequest(mockPut, "PUT"))
     }
-    if (mockPatch && mockPatch.Active) {
-        mock.Mocks.push(mockPatch)
+    if (mockPatch.Active) {
+        mock.Mocks.push(mockStateToMockRequest(mockPatch, "PATCH"))
     }
-    if (mockDelete && mockDelete.Active) {
-        mock.Mocks.push(mockDelete)
+    if (mockDelete.Active) {
+        mock.Mocks.push(mockStateToMockRequest(mockDelete, "DELETE"))
     }
 
     return fetch(config.Url + "api/create", {
@@ -36,4 +36,25 @@ export const CreateFile = file => {
         method: 'POST',
         body: formData
     })
+}
+
+const mockStateToMockRequest = (mockState, httpMethod) => {
+    let request = {
+        HttpMethod: httpMethod,
+        StatusCode: mockState.StatusCode,
+        ContentType: mockState.ContentType,
+        Body: mockState.Body,
+        Charset: mockState.Charset,
+        Headers: []
+    }
+
+    mockState.Headers.forEach(header => {
+        let key = header.keyH[0]
+        let value = Array.isArray(header.valueH) ? header.valueH[0] : ""
+        request.Headers.push({
+            Key: key,
+            Value: value
+        })
+    });
+    return request;
 }
