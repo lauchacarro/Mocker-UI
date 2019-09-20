@@ -17,6 +17,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Loading from '../Loading'
+import SnackbarContent from '../CustomSnackbarContent'
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles(theme => ({
     gridContainer: {
@@ -59,6 +61,8 @@ const MockTab = () => {
     const [tabindex, setTabindex] = React.useState(0);
 
     const [openDialog, setOpenDialog] = React.useState();
+    const [openAlert, setOpenAlert] = React.useState(false);
+    const [alertMessage, setAlertMessage] = React.useState("");
     const [downloadLink, setDownloadLink] = React.useState('');
     const [isLoading, setLoading] = React.useState(false)
 
@@ -66,15 +70,65 @@ const MockTab = () => {
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
-    
+
     const handleClick = () => {
-        setLoading(true)
-        CreateMock(mockGet, mockPost, mockPut, mockPatch, mockDelete)
-            .then(response => response.json()).then(response => {
-                setLoading(false)
-                setOpenDialog(true);
-                setDownloadLink(config.Url + "api/" + response.guid)
-            });
+        if (mockGet.Active && mockGet.ContentType === "application/json" && !validateJson(mockGet.Body)) {
+            setAlertMessage("GET body does not have a correct JSON format")
+            setOpenAlert(true);
+        }
+        else if (mockGet.Active && mockGet.ContentType === "application/xml" && !validateXML(mockGet.Body)) {
+            setAlertMessage("GET body does not have a correct XML format")
+            setOpenAlert(true);
+        }
+        else if (mockPost.Active && mockPost.ContentType === "application/json" && !validateJson(mockPost.Body)) {
+            setAlertMessage("POST body does not have a correct JSON format")
+            setOpenAlert(true);
+        }
+        else if (mockPost.Active && mockPost.ContentType === "application/xml" && !validateXML(mockPost.Body)) {
+            setAlertMessage("POST body does not have a correct XML format")
+            setOpenAlert(true);
+        }
+        else if (mockPut.Active && mockPut.ContentType === "application/json" && !validateJson(mockPut.Body)) {
+            setAlertMessage("PUT body does not have a correct JSON format")
+            setOpenAlert(true);
+        }
+        else if (mockPut.Active && mockPut.ContentType === "application/xml" && !validateXML(mockPut.Body)) {
+            setAlertMessage("PUT body does not have a correct XML format")
+            setOpenAlert(true);
+        }
+        else if (mockPatch.Active && mockPatch.ContentType === "application/json" && !validateJson(mockPatch.Body)) {
+            setAlertMessage("PATCH body does not have a correct JSON format")
+            setOpenAlert(true);
+        }
+        else if (mockPatch.Active && mockPatch.ContentType === "application/xml" && !validateXML(mockPatch.Body)) {
+            setAlertMessage("PATCH body does not have a correct XML format")
+            setOpenAlert(true);
+        }
+        else if (mockDelete.Active && mockDelete.ContentType === "application/json" && !validateJson(mockDelete.Body)) {
+            setAlertMessage("DELETE body does not have a correct JSON format")
+            setOpenAlert(true);
+        }
+        else if (mockDelete.Active && mockDelete.ContentType === "application/xml" && !validateXML(mockDelete.Body)) {
+            setAlertMessage("DELETE body does not have a correct XML format")
+            setOpenAlert(true);
+        }
+        else {
+            setLoading(true)
+            CreateMock(mockGet, mockPost, mockPut, mockPatch, mockDelete)
+                .then(response => response.json()).then(response => {
+                    setLoading(false)
+                    setOpenDialog(true);
+                    setDownloadLink(config.Url + "api/" + response.guid)
+                });
+        }
+
+
+    }
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false)
     }
     const handleChangeHeaders = method => (headers) => {
         changeMock(method, "Headers", headers)
@@ -204,6 +258,22 @@ const MockTab = () => {
                     </DialogActions>
                 </Dialog>
                 : null}
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                open={openAlert}
+                autoHideDuration={300000}
+                onClose={handleCloseAlert}
+            >
+                <SnackbarContent
+                    onClose={handleCloseAlert}
+                    variant="error"
+                    message={alertMessage}
+                />
+            </Snackbar>
+
         </div>
     )
 }
