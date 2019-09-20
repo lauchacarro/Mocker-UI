@@ -262,7 +262,7 @@ const MockTab = () => {
                     horizontal: 'center',
                 }}
                 open={openAlert}
-                autoHideDuration={300000}
+                autoHideDuration={3000}
                 onClose={handleCloseAlert}
             >
                 <SnackbarContent
