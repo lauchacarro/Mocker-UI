@@ -12,7 +12,7 @@ const SandBox = props => {
       element.style.height = "100%"
     });
 
-    document.querySelectorAll('.makeStyles-gridSandbox-167 > div').forEach(element => {
+    document.querySelectorAll('.makeStyles-gridSandbox-168 > div').forEach(element => {
       element.style.width = "100%"
       element.style.height = "100%"
       element.style.position = "relative"

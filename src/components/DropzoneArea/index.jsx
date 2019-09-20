@@ -30,9 +30,7 @@ export default function DropzoneDialogExample() {
     }
 
     const sendRequest = (file) => {
-
         if (!openDialog) {
-
             setLoading(true)
             CreateFile(file).then(response => response.json())
                 .then(response => {
@@ -41,15 +39,13 @@ export default function DropzoneDialogExample() {
                     setDownloadLink(config.Url + "api/files/" + response.guid)
                 });
         }
-
     }
 
     return (
         <div>
             {isLoading ? <Loading /> :
-                
                 <ToyZone onFilesAdded={handleSave} />
-                    }
+            }
             {openDialog ?
                 <Dialog
                     open={openDialog}
@@ -58,18 +54,16 @@ export default function DropzoneDialogExample() {
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-slide-title">{"Congratulations!!! File Uploaded"}</DialogTitle>
                     <DialogContent>
+                        <p>Share the link with whoever you want.</p>
                         <DialogContentText id="alert-dialog-slide-description">
-                            <a href={downloadLink}>Descargar archivo</a>
+                            <a href={downloadLink} target="_blank">{downloadLink}</a>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCloseDialog} color="primary">
-                            Disagree
-                    </Button>
-                        <Button onClick={handleCloseDialog} color="primary">
-                            Agree
+                            Close
                     </Button>
                     </DialogActions>
                 </Dialog>

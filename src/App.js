@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Suspense fallback={<Loading/>}>
       <Router>
-        <Route path="/" exact component={Home} />
+        <Route path="/" component={Home} />
       </Router>
     </Suspense>
   );

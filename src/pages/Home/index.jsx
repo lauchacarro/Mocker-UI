@@ -18,6 +18,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Tabs from '../../components/Tabs';
+import Loading from '../../components/Loading'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 
 import useStyles from './styles'
 
@@ -81,12 +84,24 @@ const Home = () => {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <Link to={'/'} className={classes.link} >
+            <ListItem button key={"Home"}>
+              <ListItemIcon><InboxIcon /></ListItemIcon>
+              <ListItemText primary={"Home"} />
+            </ListItem>
+          </Link>
+          <Link to={'/postman'} className={classes.link} >
+            <ListItem button key={"Sample Postman"}>
+              <ListItemIcon><InboxIcon /></ListItemIcon>
+              <ListItemText primary={"Simple Postman"} />
+            </ListItem>
+          </Link>
+          {/* {['Home', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
-          ))}
+          ))} */}
         </List>
         <Divider />
         <List>
@@ -100,8 +115,12 @@ const Home = () => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <Switch>
+          <Route exact path='/' component={Tabs} />
+          <Route path='/postman' component={Loading} />
+        
+        </Switch>
 
-        <Tabs />
 
       </main>
 

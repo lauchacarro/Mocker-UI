@@ -6,6 +6,10 @@ const useStyles = makeStyles((theme) =>
       display: 'flex'
       
     },
+    link:{
+      textDecoration:"none",
+      color: "black"
+    },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(['width', 'margin'], {
