@@ -1,14 +1,13 @@
 .App {
     font-family: sans-serif;
     text-align: center;
-  }
-  
-  .hide {
+}
+
+.sandbox-hide {
     display: none !important;
-  }
-  .ace_warning,
-  .ace_error {
+}
+
+.ace_warning,
+.ace_error {
     background: none !important;
-  }
-
-
+}

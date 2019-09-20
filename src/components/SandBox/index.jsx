@@ -12,14 +12,14 @@ const SandBox = props => {
       element.style.height = "100%"
     });
 
-    document.querySelectorAll('.makeStyles-gridSandbox-168 > div').forEach(element => {
-      element.style.width = "100%"
-      element.style.height = "100%"
-      element.style.position = "relative"
-      element.style.padding = "1px"
-      element.style.background = "linear-gradient(to right, rgb(4, 92, 255), rgb(255, 251, 0), rgb(197, 49, 12))"
-
+    document.querySelectorAll('.sandbox-hide').forEach(element => {
+      element.parentElement.parentElement.style.width = "100%"
+      element.parentElement.parentElement.style.height = "100%"
+      element.parentElement.parentElement.style.position = "relative"
+      element.parentElement.parentElement.style.padding = "1px"
+      element.parentElement.parentElement.style.background = "linear-gradient(to right, rgb(4, 92, 255), rgb(255, 251, 0), rgb(197, 49, 12))"
     });
+    
     document.querySelectorAll('#tabs-content > div:nth-child(4)').forEach(element => {
       element.remove()
     });
@@ -35,8 +35,9 @@ const SandBox = props => {
 
   return (
     <ReactSandbox
+    id="sandboxSkere"
       classes={{
-        header: "hide"
+        header: "sandbox-hide"
       }}
       displayMode="horizontal-split"
       selectedTab="scriptTab"
