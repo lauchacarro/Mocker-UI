@@ -37,7 +37,7 @@ const HttpMethodMock = props => {
                     <Paper className={classes.hidden}></Paper>
                 </Grid> */}
                 <Grid item md={6} className={classes.gridSandbox}>
-                    <SandBox handleChangeSandBox={handleChangeSandBox} className={classes.moduleBorderWrap} disable={needCheck && !checked} />
+                    <SandBox handleChangeSandBox={handleChangeSandBox} content={mock.Body} className={classes.moduleBorderWrap} disable={needCheck && !checked} />
                 </Grid>
                 <Grid item md>
                     <HeaderPanel disabled={needCheck && !checked} headers={mock.Headers} handleChangeHeaders={handleChangeHeaders}/>

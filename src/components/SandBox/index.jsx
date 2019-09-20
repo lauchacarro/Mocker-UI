@@ -3,8 +3,7 @@ import { Sandbox as ReactSandbox } from 'react-sandbox-editor'
 import './styles.css'
 
 const SandBox = props => {
-  const value = '{"Hello" : "World"}'
-  const { disable, handleChangeSandBox } = props
+  const { disable, handleChangeSandBox, content } = props
 
   useEffect(() => {
 
@@ -53,7 +52,7 @@ const SandBox = props => {
         'allow-top-navigation'
       ]}
       scriptEditor={{
-        defaultValue: value,
+        defaultValue: content,
         mode: 'javascript',
         readOnly: disable,
         wrapLines: true
