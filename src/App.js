@@ -7,7 +7,7 @@ const Home = lazy(() => import('./pages/Home'));
 const App = () => {
   return (
     <Suspense fallback={<Loading/>}>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>>
         <Route path="/" component={Home} />
       </Router>
     </Suspense>
