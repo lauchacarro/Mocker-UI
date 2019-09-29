@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Tabs from '../../components/Tabs';
 import Loading from '../../components/Loading'
+import MiniPostman from '../../components/MiniPostman'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 
@@ -91,9 +92,9 @@ const Home = () => {
             </ListItem>
           </Link>
           <Link to={'/postman'} className={classes.link} >
-            <ListItem button key={"Sample Postman"}>
+            <ListItem button key={"Mini Postman"}>
               <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Simple Postman"} />
+              <ListItemText primary={"Mini Postman"} />
             </ListItem>
           </Link>
           {/* {['Home', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -117,7 +118,7 @@ const Home = () => {
         <div className={classes.toolbar} />
         <Switch>
           <Route exact path='/' component={Tabs} />
-          <Route path='/postman' component={Loading} />
+          <Route path='/postman' component={MiniPostman} />
         
         </Switch>
 

@@ -7,8 +7,8 @@ import cloudUpload from './svg/cloud-upload.svg'
 const UploadFile = props => {
 
     return (
-        <Icon fontSize="large" color="primary">
-            <img  src={cloudUpload} height="100vh"/>
+        <Icon fontSize="large" color="primary" style={{ fontSize: "10rem" }}>
+            <img src={cloudUpload} height="100vh" />
         </Icon>
     )
 }

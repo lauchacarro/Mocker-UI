@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.0-rc.0",
     "@material-ui/icons": "^4.4.1",
+    "material-table": "^1.51.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1",
