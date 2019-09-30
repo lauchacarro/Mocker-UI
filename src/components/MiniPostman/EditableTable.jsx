@@ -1,6 +1,7 @@
 import React from 'react'
 import MaterialTable from 'material-table'
 class EditableTable extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -8,14 +9,15 @@ class EditableTable extends React.Component {
                 { title: 'Key', field: 'key' },
                 { title: 'Value', field: 'value' }
             ],
-            data: []
+            data: [],
+            title: props.title
         }
     }
 
     render() {
         return (
             <MaterialTable
-                title="Headers"
+                title={this.state.title}
                 columns={this.state.columns}
                 data={this.state.data}
                 options={{

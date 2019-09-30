@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const HttpMethodSelect = props => {
-    const { disable, handleChangeContentType, value } = props
+    const { disable, handleMethodChange, value } = props
     const classes = useStyles();
 
     return (
@@ -27,7 +27,7 @@ const HttpMethodSelect = props => {
                 value={value}
                 label="Http Method"
 
-                onChange={handleChangeContentType}
+                onChange={handleMethodChange}
                 inputProps={{
                     name: 'ContentType',
                     id: 'type-simple',
