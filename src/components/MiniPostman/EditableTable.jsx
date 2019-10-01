@@ -13,6 +13,11 @@ class EditableTable extends React.Component {
             title: props.title
         }
     }
+    componentDidUpdate(){
+        if(this.props.handleTableUpdateData){
+            this.props.handleTableUpdateData(this.state.data)
+        }
+    }
 
     render() {
         return (

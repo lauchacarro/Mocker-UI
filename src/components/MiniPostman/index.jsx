@@ -53,42 +53,73 @@ const MiniPostman = () => {
     const [tabRequestValue, setTabRequestValue] = useState(0)
     const [tabRequestBodyValue, setTabRequestBodyValue] = useState(0)
     const [requestHeader, setRequestHeader] = useState([])
+    const [requestFormData, setRequestFormData] = useState([])
+    const [requestFormUrlEncoded, setRequestFormUrlEncoded] = useState([])
     const [requestMethod, setRequestMethod] = useState('GET')
+    const [requestUrl, setRequestUrl] = useState('')
     const [requestBodyContentType, setRequestBodyContentType] = useState('application/json')
 
-    const handleMethodChange = event => {
-        setRequestMethod(event.target.value)
-    }
-    const handleBodyContentTypeChange = event => {
-        setRequestBodyContentType(event.target.value)
-    }
-    function handleTabRequestChange(event, newValue) {
-        setTabRequestValue(newValue);
-    }
+    const handleMethodChange = event => setRequestMethod(event.target.value)
 
-    function handleTabRequestChangeIndex(index) {
-        setTabRequestValue(index);
-    }
-    function handleChangeIndex(index) {
-        setTabRequestValue(index);
-    }
+    const handleURLChange = event => setRequestUrl(event.target.value)
+
+    const handleBodyContentTypeChange = event => setRequestBodyContentType(event.target.value)
+
+    const handleTabRequestChange = (event, newValue) => setTabRequestValue(newValue);
+
+
+    const handleTabRequestChangeIndex = (index) => setTabRequestValue(index);
+
+    const handleChangeIndex = (index) => setTabRequestValue(index);
+
 
     const handleTableUpdateData = name => newData => {
-       
+
         if (name === "headers") {
-            console.log(name)
-            console.log(newData)
             const data = requestHeader;
             data.push(newData);
-
             setRequestHeader(data)
+        }
+        if (name === "formdata") {
+            const data = requestFormData;
+            data.push(newData);
+            setRequestFormData(data)
+        }
+        if (name === "formurlencoded") {
+            const data = requestFormUrlEncoded;
+            data.push(newData);
+            setRequestFormUrlEncoded(data)
         }
 
     }
 
+    const sendRequest = (e) => {
+        let response = {}
+        console.log(response);
+        let headers = new Headers();
+        if (requestHeader.length > 0) {
+            requestHeader.map((item, index) => {
+                headers.append(item.key, item.value)
+            })
+        }
+        let request = { method: requestMethod, headers: headers }
+        console.log(request)
+        fetch(requestUrl, request)
+            .then(responsefetch => {
+                response.statusCode = responsefetch.status
+                response.statusText = responsefetch.statusText
+                response.headers = responsefetch.headers
 
-    const handleChangeHeaders = (headers) => {
-        setRequestHeader(headers)
+                console.log(response)
+
+                return responsefetch.text()
+            })
+            .then(data => {
+                if (data && data != null) {
+                    response.body = data
+                    console.log(response)
+                }
+            })
     }
     return (
 
@@ -102,8 +133,9 @@ const MiniPostman = () => {
                         label="Request"
                         style={{ margin: 8, width: "70vw" }}
                         placeholder="Enter request URL"
+                        onChange={handleURLChange}
                         // helperText="Full width!"
-
+                        value={requestUrl}
                         margin="normal"
                         InputLabelProps={{
                             shrink: true,
@@ -112,7 +144,7 @@ const MiniPostman = () => {
                     <Button variant="contained" style={{
                         backgroundColor: "#147eff",
                         color: "white"
-                    }} className={classes.button}> Send </Button>
+                    }} className={classes.button} onClick={sendRequest}> Send </Button>
                 </Grid>
                 <ExpansionPanel className={classes.expansionFullWidth}>
                     <ExpansionPanelSummary
@@ -173,10 +205,10 @@ const MiniPostman = () => {
                                         <TabPanel value={tabRequestBodyValue} index={0}>
                                         </TabPanel>
                                         <TabPanel value={tabRequestBodyValue} index={1}>
-                                            <EditableTable title={"Form Data"} />
+                                            <EditableTable title={"Form Data"} handleTableUpdateData={handleTableUpdateData("formdata")} />
                                         </TabPanel>
                                         <TabPanel value={tabRequestBodyValue} index={2}>
-                                            <EditableTable title={"X WWW Form Urlencoded"} />
+                                            <EditableTable title={"X WWW Form Urlencoded"} handleTableUpdateData={handleTableUpdateData("formurlencoded")} />
                                         </TabPanel>
                                         <TabPanel value={tabRequestBodyValue} index={3}>
                                             <Paper className={classes.paperFullWidth}>
