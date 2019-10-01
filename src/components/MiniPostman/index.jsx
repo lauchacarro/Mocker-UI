@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
+        borderLeft: `1px solid ${theme.palette.divider}`,
     },
 
 }));
@@ -148,10 +149,10 @@ const MiniPostman = () => {
                 </Grid>
                 <ExpansionPanel className={classes.expansionFullWidth}>
                     <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon style={{ color: "white" }} />}
+                        expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
-                        style={{ background: "#ff8614", color: "white" }}
+                        
                     >
                         <Typography className={classes.heading}>Settings</Typography>
                     </ExpansionPanelSummary>
@@ -225,7 +226,7 @@ const MiniPostman = () => {
                                         </TabPanel>
                                     </SwipeableViews>
                                 </TabPanel>
-                                <TabPanel value={tabRequestValue} index={1} dir={theme.direction} style={{ width: "90vw" }}>
+                                <TabPanel value={tabRequestValue} index={1} dir={theme.direction} style={{ width: "80vw" }}>
                                     <EditableTable title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} />
                                 </TabPanel>
 
