@@ -96,7 +96,6 @@ const MiniPostman = () => {
 
     const sendRequest = (e) => {
         let response = {}
-        console.log(response);
         let headers = new Headers();
         if (requestHeader.length > 0) {
             requestHeader.map((item, index) => {
@@ -104,21 +103,19 @@ const MiniPostman = () => {
             })
         }
         let request = { method: requestMethod, headers: headers }
-        console.log(request)
         fetch(requestUrl, request)
             .then(responsefetch => {
                 response.statusCode = responsefetch.status
                 response.statusText = responsefetch.statusText
                 response.headers = responsefetch.headers
-
-                console.log(response)
-
+                
                 return responsefetch.text()
             })
             .then(data => {
                 if (data && data != null) {
                     response.body = data
-                    console.log(response)
+                    response.bodySize = encodeURI(data).split(/%..|./).length - 1
+                    console.log(response.bodySize)
                 }
             })
     }
