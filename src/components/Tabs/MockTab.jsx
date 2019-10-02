@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef, useRef, useImperativeHandle } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SwipeableViews from 'react-swipeable-views';
@@ -39,11 +39,11 @@ const useStyles = makeStyles(theme => ({
     },
     buttonCreate: {
         textAlign: "center",
-        width: "100%"
+        width: "100%",
     }
 }));
 
-const MockTab = () => {
+const MockTab = forwardRef((props, ref) => {
     const classes = useStyles();
     const mockDefault = {
         Active: false,
@@ -70,6 +70,7 @@ const MockTab = () => {
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
+
 
     const handleClick = () => {
         if (mockGet.Active && mockGet.ContentType === "application/json" && !validateJson(mockGet.Body)) {
@@ -124,6 +125,11 @@ const MockTab = () => {
 
 
     }
+    useImperativeHandle(ref, () => ({
+        save(){
+            handleClick()
+        }
+    }));
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -231,7 +237,7 @@ const MockTab = () => {
                             <HttpMethodMock classes={classes} mock={mockDelete} handleChangeSandBox={handleChangeSandBox("DELETE")} handleChangeSelect={handleChangeSelect("DELETE")} handleChangeSwitch={handleChangeSwitch("DELETE")} handleChangeHeaders={handleChangeHeaders("DELETE")} />
                         </TabPanel>
                     </SwipeableViews>
-                    <Button onClick={handleClick} className={classes.buttonCreate} color="primary" variant="contained" size="large">Create Mock</Button>
+                    {/* <Button onClick={handleClick} className={classes.buttonCreate} color="secondary" variant="contained" size="large">Create Mock</Button> */}
                 </div>
             }
             {openDialog ?
@@ -244,7 +250,7 @@ const MockTab = () => {
                 >
                     <DialogTitle id="alert-dialog-slide-title">{"Congratulations!!! Mock Created"}</DialogTitle>
                     <DialogContent>
-                    <p>Share the link with whoever you want.</p>
+                        <p>Share the link with whoever you want.</p>
                         <DialogContentText id="alert-dialog-slide-description">
                             <a href={downloadLink} target="_blank">{downloadLink}</a>
                         </DialogContentText>
@@ -274,6 +280,6 @@ const MockTab = () => {
 
         </div>
     )
-}
+})
 
 export default MockTab;

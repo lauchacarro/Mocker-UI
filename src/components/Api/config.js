@@ -1,3 +1,3 @@
 export const config = {
-    Url: "https://mockercloud.herokuapp.com"
+    Url: "https://mockercloud.herokuapp.com/"
 }
