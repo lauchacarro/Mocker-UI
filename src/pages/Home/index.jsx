@@ -15,13 +15,10 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Save from '@material-ui/icons/Save';
-import MailIcon from '@material-ui/icons/Mail';
 import Tabs from '../../components/Tabs';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import GitHubIcon from '../../icons/GitHubIcon'
-
 import useStyles from './styles'
 
 const Home = () => {
@@ -89,7 +86,7 @@ const Home = () => {
             <ListItemIcon><Save /></ListItemIcon>
             <ListItemText primary={"Create Mock"} />
           </ListItem>
-          <ListItem button key={"GitHub"} onClick={() => window.location.href = "https://github.com/mockercloud"}>
+          <ListItem button key={"GitHub"} onClick={() => window.location.href = "https://github.com/mockercloud/mockercloud.github.io"}>
             <ListItemIcon><GitHubIcon /></ListItemIcon>
             <ListItemText primary={"GitHub"} />
           </ListItem>

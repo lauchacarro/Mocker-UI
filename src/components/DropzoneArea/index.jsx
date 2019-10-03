@@ -42,11 +42,11 @@ export default function DropzoneDialogExample() {
     }
 
     return (
-        <div>
+        <>
             {isLoading ? <Loading /> :
                 <ToyZone onFilesAdded={handleSave} />
             }
-            {openDialog ?
+            {openDialog &&
                 <Dialog
                     open={openDialog}
                     TransitionComponent={Transition}
@@ -67,9 +67,9 @@ export default function DropzoneDialogExample() {
                     </Button>
                     </DialogActions>
                 </Dialog>
-                : null}
+            }
 
-        </div>
+        </>
 
     );
 

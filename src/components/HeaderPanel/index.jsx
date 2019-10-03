@@ -1,55 +1,30 @@
 import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
+import { Grid, InputAdornment, IconButton, TextField, Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Add from '@material-ui/icons/Add';
-import Remove from '@material-ui/icons/Remove';
 import clsx from 'clsx';
-import Grid from '@material-ui/core/Grid';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        width: '75%',
-        paddingLeft: "1vh",
-        margin: "0 auto",
-        maxHeight:"100px"
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-    gridHeaderAdded: {
-        paddingTop: "12px",
-        color: "grey"
-    },
-    textHeaderAdded: {
-        color: "grey"
-    }
-}));
+import useStyles from './styles'
+import HeadersFields from './HeadersFields'
 
 const HeaderPanel = props => {
     const { disabled, handleChangeHeaders, headers } = props
-
-    const [header, setheader] = React.useState({ keyH: "", valueH: "" })
+    const [header, setheader] = React.useState({ key: '', value: '' })
+    const [headersState, setHeadersState] = React.useState(headers)
     const classes = useStyles();
- 
+
     const handleAddHeader = event => {
-        if (header.keyH.toString().replace(/\s/g, '').length > 0) {
-            handleChangeHeaders([...headers, header])
-            setheader({ keyH: "", valueH: "" })
+        if (header.key.toString().replace(/\s/g, '').length > 0) {
+            setHeadersState([...headersState, header])
+            handleChangeHeaders && handleChangeHeaders([...headersState, header])
+            setheader({ key: '', value: '' })
         }
     }
     const handleHeaderOnChange = event => {
-        setheader({ ...header, [event.target.name]: [event.target.value] })
+        setheader({ ...header, [event.target.name]: event.target.value })
     }
     const handleRemoveHeader = index => event => {
-        handleChangeHeaders(headers.filter((value, indexHeader) => indexHeader != index))
+        setHeadersState(headersState.filter((value, indexHeader) => indexHeader !== index))
+        handleChangeHeaders && handleChangeHeaders(headersState)
     }
     return (
         <div className={classes.root} >
@@ -66,17 +41,17 @@ const HeaderPanel = props => {
                             <Grid item xs={6}>
                                 <TextField
                                     className={clsx(classes.margin, classes.textField)}
-                                    value={header.keyH}
+                                    value={header.key}
                                     onChange={handleHeaderOnChange}
-                                    name="keyH"
+                                    name="key"
                                 />
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
                                     className={clsx(classes.margin, classes.textField)}
-                                    value={header.valueH}
+                                    value={header.value}
                                     onChange={handleHeaderOnChange}
-                                    name="valueH"
+                                    name="value"
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -92,42 +67,12 @@ const HeaderPanel = props => {
                                 />
                             </Grid>
                         </Grid>
-                        {headers.map(function (header, index) {
-                            return <Grid container spacing={3} className={classes.gridHeaderAdded}>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        className={clsx(classes.margin, classes.textField)}
-                                        disabled
-                                        value={header.keyH}
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <TextField
-                                        className={clsx(classes.margin, classes.textField)}
-                                        disabled
-                                        value={header.valueH}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        edge="end"
-                                                        onClick={handleRemoveHeader(index)}
-                                                    >
-                                                        <Remove />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                </Grid>
-                            </Grid>
-                        })}
+                        <HeadersFields handleRemoveHeader={handleRemoveHeader} headers={headersState} />
                     </Grid>
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         </div>
     )
-
 }
 
 export default HeaderPanel;

@@ -1,68 +1,25 @@
-import React, { useState, forwardRef, useRef, useImperativeHandle } from 'react'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
+import { useTheme } from '@material-ui/core/styles';
+import { Button, Tabs, Tab, Slide, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Snackbar } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import TabPanel from './TabPanel'
 import AllTabProps from './AllTabProps'
 import HttpMethodMock from './HttpMethodMock'
-import { validateJson, validateXML } from '../../helpers/Validations'
+import ValidateMock from '../../helpers/Validations'
 import { CreateMock } from '../Api'
 import { config } from '../Api/config'
-import Slide from '@material-ui/core/Slide';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Loading from '../Loading'
 import SnackbarContent from '../CustomSnackbarContent'
-import Snackbar from '@material-ui/core/Snackbar';
-
-const useStyles = makeStyles(theme => ({
-    gridContainer: {
-        textAlign: "center"
-    },
-    gridSandbox: {
-        height: "50%"
-    },
-    moduleBorderWrap: {
-        maxWidth: "250px",
-        padding: "1rem",
-        position: "relative",
-        background: "linear-gradient(to right, red, purple)",
-        padding: "3px"
-    },
-    hidden: {
-        visibility: "hidden"
-    },
-    buttonCreate: {
-        textAlign: "center",
-        width: "100%",
-    }
-}));
+import useStyles from './mockTabStyles'
+import { mockDefault } from '../../assets/mockDefault'
 
 const MockTab = forwardRef((props, ref) => {
     const classes = useStyles();
-    const mockDefault = {
-        Active: false,
-        Body: '{"Hello" : "World"}',
-        ContentType: "application/json",
-        StatusCode: 200,
-        Headers: [],
-        Charset: "UTF-8"
-    }
-    const [mockGet, setMockGet] = useState({ ...mockDefault, Active: true })
-    const [mockPost, setMockPost] = useState(mockDefault)
-    const [mockPut, setMockPut] = useState(mockDefault)
-    const [mockPatch, setMockPatch] = useState(mockDefault)
-    const [mockDelete, setMockDelete] = useState(mockDefault)
+    const [mocks, setMocks] = useState([])
     const [tabindex, setTabindex] = React.useState(0);
-
     const [openDialog, setOpenDialog] = React.useState();
     const [openAlert, setOpenAlert] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("");
+    const [alertMessage, setAlertMessage] = React.useState('');
     const [downloadLink, setDownloadLink] = React.useState('');
     const [isLoading, setLoading] = React.useState(false)
 
@@ -71,133 +28,85 @@ const MockTab = forwardRef((props, ref) => {
         return <Slide direction="up" ref={ref} {...props} />;
     });
 
+    useEffect(() => {
+        setMocks( [
+            { ...mockDefault, HttpMethod: 'GET', Active: true },
+            { ...mockDefault, HttpMethod: 'POST' },
+            { ...mockDefault, HttpMethod: 'PUT' },
+            { ...mockDefault, HttpMethod: 'PATCH' },
+            { ...mockDefault, HttpMethod: 'DELETE' }
+        ])
+    }, [])
+
+
+
 
     const handleClick = () => {
-        if (mockGet.Active && mockGet.ContentType === "application/json" && !validateJson(mockGet.Body)) {
-            setAlertMessage("GET body does not have a correct JSON format")
-            setOpenAlert(true);
-        }
-        else if (mockGet.Active && mockGet.ContentType === "application/xml" && !validateXML(mockGet.Body)) {
-            setAlertMessage("GET body does not have a correct XML format")
-            setOpenAlert(true);
-        }
-        else if (mockPost.Active && mockPost.ContentType === "application/json" && !validateJson(mockPost.Body)) {
-            setAlertMessage("POST body does not have a correct JSON format")
-            setOpenAlert(true);
-        }
-        else if (mockPost.Active && mockPost.ContentType === "application/xml" && !validateXML(mockPost.Body)) {
-            setAlertMessage("POST body does not have a correct XML format")
-            setOpenAlert(true);
-        }
-        else if (mockPut.Active && mockPut.ContentType === "application/json" && !validateJson(mockPut.Body)) {
-            setAlertMessage("PUT body does not have a correct JSON format")
-            setOpenAlert(true);
-        }
-        else if (mockPut.Active && mockPut.ContentType === "application/xml" && !validateXML(mockPut.Body)) {
-            setAlertMessage("PUT body does not have a correct XML format")
-            setOpenAlert(true);
-        }
-        else if (mockPatch.Active && mockPatch.ContentType === "application/json" && !validateJson(mockPatch.Body)) {
-            setAlertMessage("PATCH body does not have a correct JSON format")
-            setOpenAlert(true);
-        }
-        else if (mockPatch.Active && mockPatch.ContentType === "application/xml" && !validateXML(mockPatch.Body)) {
-            setAlertMessage("PATCH body does not have a correct XML format")
-            setOpenAlert(true);
-        }
-        else if (mockDelete.Active && mockDelete.ContentType === "application/json" && !validateJson(mockDelete.Body)) {
-            setAlertMessage("DELETE body does not have a correct JSON format")
-            setOpenAlert(true);
-        }
-        else if (mockDelete.Active && mockDelete.ContentType === "application/xml" && !validateXML(mockDelete.Body)) {
-            setAlertMessage("DELETE body does not have a correct XML format")
-            setOpenAlert(true);
-        }
-        else {
+        let isValidationSuccess = true;
+        mocks.forEach((mock, index, array) => {
+            const result = ValidateMock(mock)
+            if (result.error) {
+                isValidationSuccess = !result.error;
+                setAlertMessage(result.message);
+                setOpenAlert(result.error);
+                return
+            }
+        })
+
+        if (isValidationSuccess) {
             setLoading(true)
-            CreateMock(mockGet, mockPost, mockPut, mockPatch, mockDelete)
+            CreateMock(mocks)
                 .then(response => response.json()).then(response => {
                     setLoading(false)
                     setOpenDialog(true);
                     setDownloadLink(config.Url + "api/" + response.guid)
                 });
         }
-
-
     }
     useImperativeHandle(ref, () => ({
-        save(){
+        save() {
             handleClick()
         }
     }));
     const handleCloseAlert = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
+        if (reason === 'clickaway') return;
         setOpenAlert(false)
     }
-    const handleChangeHeaders = method => (headers) => {
+    const handleChangeHeaders = method => (headers) =>
         changeMock(method, "Headers", headers)
-    }
 
-    const handleChangeSandBox = method => (editorName, value) => {
+    const handleChangeSandBox = method => (editorName, value) =>
         changeMock(method, "Body", value)
-    }
 
-    const handleChangeSelect = method => (event) => {
+    const handleChangeSelect = method => (event) =>
         changeMock(method, event.target.name, event.target.value)
-    }
 
-    const handleChangeSwitch = method => (event, value) => {
+    const handleChangeSwitch = method => (event, value) =>
         changeMock(method, "Active", value)
-    }
-    const changeMock = (method, name, value) => {
-        switch (method) {
-            case "GET":
-                setMockGet({ ...mockGet, [name]: value })
-                break;
-            case "POST":
-                setMockPost({ ...mockPost, [name]: value })
-                break;
-            case "PUT":
-                setMockPut({ ...mockPut, [name]: value })
-                break;
-            case "PATCH":
-                setMockPatch({ ...mockPatch, [name]: value })
-                break;
-            case "DELETE":
-                setMockDelete({ ...mockDelete, [name]: value })
-                break;
-        }
-    }
-    function handleChangeTab(event, newValue) {
-        setTabindex(newValue);
-    }
 
-    function handleChangeTabIndex(index) {
+    const changeMock = (method, name, value) => {
+        const mockChangedIndex = mocks.findIndex(mock => {
+            return mock.HttpMethod === method
+        })
+
+        mocks.splice(mockChangedIndex, 0, { ...mocks[mockChangedIndex], [name]: value })
+        mocks.splice(mockChangedIndex + 1, 1)
+        setMocks(mocks)
+    }
+    const handleChangeTab = (event, newValue) =>
+        setTabindex(newValue);
+
+
+    const handleChangeTabIndex = index =>
         setTabindex(index);
-    }
-    const validateBody = () => {
-        if (validateJson(mockGet.Body)) {
-            alert("GET es JSON")
-        }
-        else {
-            alert("GET no es Json")
-        }
-        if (validateXML(mockGet.Body)) {
-            alert("GET es CSV")
-        }
-        else {
-            alert("GET no es CSV")
-        }
-    }
-    function handleCloseDialog() {
+
+    const handleCloseDialog = () =>
         setOpenDialog(false);
-    }
+
     return (
-        <div>
+        <>
             {isLoading ? <Loading /> :
-                <div>
+                <>
                     <Tabs
                         value={tabindex}
                         onChange={handleChangeTab}
@@ -206,41 +115,27 @@ const MockTab = forwardRef((props, ref) => {
                         aria-label="full width tabs example"
                         centered
                     >
-                        <Tab label="GET" {...AllTabProps(0)} />
-                        <Tab label="POST" {...AllTabProps(1)} />
-                        <Tab label="PUT" {...AllTabProps(2)} />
-                        <Tab label="PATCH" {...AllTabProps(3)} />
-                        <Tab label="DELETE" {...AllTabProps(4)} />
+                        {mocks.map((mock, index) => {
+                            return <Tab label={mock.HttpMethod} {...AllTabProps(index)} />
+                        })}
+
                     </Tabs>
                     <SwipeableViews
                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                         index={tabindex}
                         onChangeIndex={handleChangeTabIndex}
                     >
-                        <TabPanel value={tabindex} index={0} dir={theme.direction}>
-                            <HttpMethodMock classes={classes} mock={mockGet} handleChangeSandBox={handleChangeSandBox("GET")} handleChangeSelect={handleChangeSelect("GET")} handleChangeSwitch={handleChangeSwitch("GET")} handleChangeHeaders={handleChangeHeaders("GET")} needCheck={false} />
-                        </TabPanel>
+                        {mocks.map((mock, index) => {
+                            return <TabPanel value={tabindex} index={index} dir={theme.direction}>
+                                <HttpMethodMock classes={classes} mock={mock} handleChangeSandBox={handleChangeSandBox(mock.HttpMethod)} handleChangeSelect={handleChangeSelect(mock.HttpMethod)} handleChangeSwitch={handleChangeSwitch(mock.HttpMethod)} handleChangeHeaders={handleChangeHeaders(mock.HttpMethod)} needCheck={mock.HttpMethod !== "GET"} />
+                            </TabPanel>
+                        })}
 
-                        <TabPanel value={tabindex} index={1} dir={theme.direction}>
-                            <HttpMethodMock classes={classes} mock={mockPost} handleChangeSandBox={handleChangeSandBox("POST")} handleChangeSelect={handleChangeSelect("POST")} handleChangeSwitch={handleChangeSwitch("POST")} handleChangeHeaders={handleChangeHeaders("POST")} />
-                        </TabPanel>
-
-                        <TabPanel value={tabindex} index={2} dir={theme.direction}>
-                            <HttpMethodMock classes={classes} mock={mockPut} handleChangeSandBox={handleChangeSandBox("PUT")} handleChangeSelect={handleChangeSelect("PUT")} handleChangeSwitch={handleChangeSwitch("PUT")} handleChangeHeaders={handleChangeHeaders("PUT")} />
-                        </TabPanel>
-
-                        <TabPanel value={tabindex} index={3} dir={theme.direction}>
-                            <HttpMethodMock classes={classes} mock={mockPatch} handleChangeSandBox={handleChangeSandBox("PATCH")} handleChangeSelect={handleChangeSelect("PATCH")} handleChangeSwitch={handleChangeSwitch("PATCH")} handleChangeHeaders={handleChangeHeaders("PATCH")} />
-                        </TabPanel>
-
-                        <TabPanel value={tabindex} index={4} dir={theme.direction}>
-                            <HttpMethodMock classes={classes} mock={mockDelete} handleChangeSandBox={handleChangeSandBox("DELETE")} handleChangeSelect={handleChangeSelect("DELETE")} handleChangeSwitch={handleChangeSwitch("DELETE")} handleChangeHeaders={handleChangeHeaders("DELETE")} />
-                        </TabPanel>
                     </SwipeableViews>
                     {/* <Button onClick={handleClick} className={classes.buttonCreate} color="secondary" variant="contained" size="large">Create Mock</Button> */}
-                </div>
+                </>
             }
-            {openDialog ?
+            {openDialog &&
                 <Dialog
                     open={openDialog}
                     TransitionComponent={Transition}
@@ -260,8 +155,7 @@ const MockTab = forwardRef((props, ref) => {
                             Close
                     </Button>
                     </DialogActions>
-                </Dialog>
-                : null}
+                </Dialog>}
             <Snackbar
                 anchorOrigin={{
                     vertical: 'top',
@@ -278,7 +172,7 @@ const MockTab = forwardRef((props, ref) => {
                 />
             </Snackbar>
 
-        </div>
+        </>
     )
 })
 
