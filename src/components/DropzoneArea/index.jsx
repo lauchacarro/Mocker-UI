@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -58,7 +58,7 @@ export default function DropzoneDialogExample() {
                     <DialogContent>
                         <p>Share the link with whoever you want.</p>
                         <DialogContentText id="alert-dialog-slide-description">
-                            <a href={downloadLink} target="_blank">{downloadLink}</a>
+                            <a href={downloadLink} rel="noopener noreferrer" target="_blank">{downloadLink}</a>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

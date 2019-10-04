@@ -17,7 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Save from '@material-ui/icons/Save';
 import Tabs from '../../components/Tabs';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import GitHubIcon from '../../icons/GitHubIcon'
 import useStyles from './styles'
 

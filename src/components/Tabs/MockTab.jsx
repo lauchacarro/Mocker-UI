@@ -29,7 +29,7 @@ const MockTab = forwardRef((props, ref) => {
     });
 
     useEffect(() => {
-        setMocks( [
+        setMocks([
             { ...mockDefault, HttpMethod: 'GET', Active: true },
             { ...mockDefault, HttpMethod: 'POST' },
             { ...mockDefault, HttpMethod: 'PUT' },
@@ -147,7 +147,7 @@ const MockTab = forwardRef((props, ref) => {
                     <DialogContent>
                         <p>Share the link with whoever you want.</p>
                         <DialogContentText id="alert-dialog-slide-description">
-                            <a href={downloadLink} target="_blank">{downloadLink}</a>
+                            <a href={downloadLink} target="_blank" rel="noopener noreferrer">{downloadLink} </a>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

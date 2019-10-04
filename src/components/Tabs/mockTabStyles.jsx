@@ -7,13 +7,6 @@ const useStyles = makeStyles(theme => createStyles({
     gridSandbox: {
         height: "50%"
     },
-    moduleBorderWrap: {
-        maxWidth: "250px",
-        padding: "1rem",
-        position: "relative",
-        background: "linear-gradient(to right, red, purple)",
-        padding: "3px"
-    },
     hidden: {
         visibility: "hidden"
     },

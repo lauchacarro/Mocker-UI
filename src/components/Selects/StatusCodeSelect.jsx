@@ -21,7 +21,7 @@ const StatusCodeSelect = props => {
             setState({ ...state, statusCode: event.target.value })
             handleChangeStatusCode && handleChangeStatusCode(event)
         }
-        else if (event.target.value == 0)
+        else if (event.target.value === 0)
             setState({ ...state, customCode: true })
         else {
             setState({ ...state, statusCode: event.target.value })
