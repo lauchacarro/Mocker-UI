@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react'
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react'
 import { useTheme } from '@material-ui/core/styles';
 import { Button, Tabs, Tab, Slide, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Snackbar } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
@@ -12,34 +12,35 @@ import Loading from '../Loading'
 import SnackbarContent from '../CustomSnackbarContent'
 import useStyles from './mockTabStyles'
 import { mockDefault } from '../../assets/mockDefault'
+import Add from '@material-ui/icons/Add';
+import HttpMethodSelect from '../Selects/HttpMethodSelect'
 
 const MockTab = forwardRef((props, ref) => {
     const classes = useStyles();
-    const [mocks, setMocks] = useState([])
+    const [mocks, setMocks] = useState([
+        { ...mockDefault, HttpMethod: 'GET', Active: true },
+        { ...mockDefault, HttpMethod: 'POST' },
+        { ...mockDefault, HttpMethod: 'PUT' },
+        { ...mockDefault, HttpMethod: 'DELETE' }
+    ])
     const [tabindex, setTabindex] = React.useState(0);
     const [openDialog, setOpenDialog] = React.useState();
     const [openAlert, setOpenAlert] = React.useState(false);
     const [alertMessage, setAlertMessage] = React.useState('');
     const [downloadLink, setDownloadLink] = React.useState('');
     const [isLoading, setLoading] = React.useState(false)
+    const [addingMock, setAddingMock] = React.useState(false)
 
     const theme = useTheme();
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
 
-    useEffect(() => {
-        setMocks([
-            { ...mockDefault, HttpMethod: 'GET', Active: true },
-            { ...mockDefault, HttpMethod: 'POST' },
-            { ...mockDefault, HttpMethod: 'PUT' },
-            { ...mockDefault, HttpMethod: 'PATCH' },
-            { ...mockDefault, HttpMethod: 'DELETE' }
-        ])
-    }, [])
-
-
-
+    let currentMethods = []
+    for (let i = 0; i < mocks.length; i++) {
+        currentMethods.push(mocks[i].HttpMethod);
+    }
+    useEffect(() => { })
 
     const handleClick = () => {
         let isValidationSuccess = true;
@@ -84,6 +85,17 @@ const MockTab = forwardRef((props, ref) => {
     const handleChangeSwitch = method => (event, value) =>
         changeMock(method, "Active", value)
 
+    const handleMethodSelectClose = event => {
+        if (!event.target.value)
+            setAddingMock(false)
+    }
+    const handleMethodChange = event => {
+        addMock(event.target.value)
+    }
+    const addMock = (httpMethod) => {
+        mocks.push({ ...mockDefault, HttpMethod: httpMethod })
+        setMocks(mocks)
+    }
     const changeMock = (method, name, value) => {
         const mockChangedIndex = mocks.findIndex(mock => {
             return mock.HttpMethod === method
@@ -94,11 +106,19 @@ const MockTab = forwardRef((props, ref) => {
         setMocks(mocks)
     }
     const handleChangeTab = (event, newValue) =>
-        setTabindex(newValue);
+        handleChangeTabIndex(newValue);
 
-
-    const handleChangeTabIndex = index =>
+    const handleChangeTabIndex = (index) => {
+        if (index == mocks.length) {
+            if (index !== tabindex || (index === tabindex && !addingMock)) {
+                setAddingMock(true)
+            }
+        }
+        else if (addingMock) {
+            setAddingMock(false)
+        }
         setTabindex(index);
+    }
 
     const handleCloseDialog = () =>
         setOpenDialog(false);
@@ -110,6 +130,7 @@ const MockTab = forwardRef((props, ref) => {
                     <Tabs
                         value={tabindex}
                         onChange={handleChangeTab}
+
                         indicatorColor="secondary"
                         textColor="secondary"
                         aria-label="full width tabs example"
@@ -118,6 +139,7 @@ const MockTab = forwardRef((props, ref) => {
                         {mocks.map((mock, index) => {
                             return <Tab label={mock.HttpMethod} {...AllTabProps(index)} />
                         })}
+                        <Tab label={addingMock ? <HttpMethodSelect handleSelectClose={handleMethodSelectClose} handleMethodChange={handleMethodChange} currentMethods={currentMethods} /> : <Add />} {...AllTabProps(mocks.length)} />
 
                     </Tabs>
                     <SwipeableViews
@@ -132,7 +154,6 @@ const MockTab = forwardRef((props, ref) => {
                         })}
 
                     </SwipeableViews>
-                    {/* <Button onClick={handleClick} className={classes.buttonCreate} color="secondary" variant="contained" size="large">Create Mock</Button> */}
                 </>
             }
             {openDialog &&

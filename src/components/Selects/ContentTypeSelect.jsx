@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import useStyles from './styles'
 import { contentTypes } from '../../assets/contentTypes'
@@ -14,7 +15,7 @@ const ContentTypeSelect = props => {
     }
 
     return (
-        <FormControl className={classes.formControl} disabled={disable}>
+        <FormControl className={clsx(classes.formControl, classes.paddingBottom50)} disabled={disable}>
             <InputLabel htmlFor="type-simple">Content Type</InputLabel>
             <Select
                 value={contentTypeState}

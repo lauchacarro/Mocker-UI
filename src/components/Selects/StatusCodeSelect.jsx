@@ -36,8 +36,8 @@ const StatusCodeSelect = props => {
         event.preventDefault();
 
     return (
-        <FormControl className={classes.formControl} disabled={disable}>
-            {!state.customCode ? <InputLabel htmlFor="code-simple">Status Code</InputLabel> : null}
+        <FormControl className={clsx(classes.formControl, classes.paddingBottom50)} disabled={disable}>
+            {!state.customCode && <InputLabel htmlFor="code-simple">Status Code</InputLabel>}
             {state.customCode ?
                 <TextField
                     id="filled-adornment-password"
@@ -52,7 +52,6 @@ const StatusCodeSelect = props => {
                             <InputAdornment position="end">
                                 <IconButton
                                     edge="end"
-                                    aria-label="toggle password visibility"
                                     onClick={handleClickDeleteIcon}
                                     onMouseDown={handleMouseDownDeleteIcon}
                                 >
