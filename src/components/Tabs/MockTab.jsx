@@ -109,7 +109,7 @@ const MockTab = forwardRef((props, ref) => {
         handleChangeTabIndex(newValue);
 
     const handleChangeTabIndex = (index) => {
-        if (index == mocks.length) {
+        if (index === mocks.length) {
             if (index !== tabindex || (index === tabindex && !addingMock)) {
                 setAddingMock(true)
             }
