@@ -41,19 +41,19 @@ const HttpMethodSelect = props => {
         event.preventDefault();
 
     return (
-        <FormControl className={clsx(classes.formControl, classes.paddingBottom20)} disabled={disable}>
+        <FormControl className={clsx(classes.formControl, classes.paddingBottom20)} disabled={disable} >
 
             {state.customMethod ?
                 <TextField
-                    id="filled-adornment-password"
                     className={clsx(classes.margin, classes.textField)}
                     type='text'
                     label="Custom Mock"
                     value={state.httpMethod}
                     onChange={handleChange}
                     name="HttpMethod"
-
+                    
                     InputProps={{
+                        autoComplete: "off",
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
