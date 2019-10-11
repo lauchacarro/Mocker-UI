@@ -100,7 +100,7 @@ const MockTab = forwardRef((props, ref) => {
         const mockChangedIndex = mocks.findIndex(mock => {
             return mock.HttpMethod === method
         })
-
+        value = typeof value === 'string' && name === 'StatusCode' ? parseInt(value) : value;
         mocks.splice(mockChangedIndex, 0, { ...mocks[mockChangedIndex], [name]: value })
         mocks.splice(mockChangedIndex + 1, 1)
         setMocks(mocks)

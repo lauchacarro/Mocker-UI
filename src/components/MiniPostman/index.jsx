@@ -115,7 +115,6 @@ const MiniPostman = () => {
                 if (data && data != null) {
                     response.body = data
                     response.bodySize = encodeURI(data).split(/%..|./).length - 1
-                    console.log(response.bodySize)
                 }
             })
     }
