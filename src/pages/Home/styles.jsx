@@ -1,9 +1,14 @@
-import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles} from '@material-ui/core/styles';
 const drawerWidth = 240;
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: 'flex'
+      
+    },
+    link:{
+      textDecoration:"none",
+      color: "black"
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
@@ -22,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: 36,
+      color:"white"
     },
     hide: {
       display: 'none',

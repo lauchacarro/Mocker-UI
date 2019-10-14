@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,28 +15,24 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import Save from '@material-ui/icons/Save';
 import Tabs from '../../components/Tabs';
-import Loading from '../../components/Loading'
+import { Switch, Route } from 'react-router-dom';
+import GitHubIcon from '../../icons/GitHubIcon'
 import useStyles from './styles'
 
-const Home: React.FC = () => {
+const Home = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false)
 
-  function handleDrawerOpen() {
+  const childRef = useRef();
+  const handleDrawerOpen = () => {
     setOpen(true);
   }
 
-  function handleDrawerClose() {
+  const handleDrawerClose = () => {
     setOpen(false);
-  }
-
-  function handleLoading(value: boolean) {
-    setLoading(value)
   }
 
   return (
@@ -50,7 +46,6 @@ const Home: React.FC = () => {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -61,7 +56,7 @@ const Home: React.FC = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Mocker
+            Mocker Cloud
           </Typography>
         </Toolbar>
       </AppBar>
@@ -86,28 +81,23 @@ const Home: React.FC = () => {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+
+          <ListItem button key={"Create Mock"} onClick={() => childRef.current.save()}>
+            <ListItemIcon><Save /></ListItemIcon>
+            <ListItemText primary={"Create Mock"} />
+          </ListItem>
+          <ListItem button key={"GitHub"} onClick={() => window.location.href = "https://github.com/mockercloud/mockercloud.github.io"}>
+            <ListItemIcon><GitHubIcon /></ListItemIcon>
+            <ListItemText primary={"GitHub"} />
+          </ListItem>
+
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-
-        {isLoading ? <Loading /> : <Tabs onFetch={handleLoading}/>}
-
+        <Switch>
+          <Route exact path='/' component={() => <Tabs ref={childRef} />} />
+        </Switch>
       </main>
     </div>
   );
