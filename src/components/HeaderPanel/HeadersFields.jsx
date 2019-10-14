@@ -28,14 +28,17 @@ const HeadersFields = props => {
                                 value={header.value}
                                 InputProps={{
                                     endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                edge="end"
-                                                onClick={handleRemoveHeader(index)}
-                                            >
-                                                <Remove />
-                                            </IconButton>
-                                        </InputAdornment>
+                                        <>
+                                            {handleRemoveHeader && <InputAdornment position="end">
+                                                <IconButton
+                                                    edge="end"
+                                                    onClick={handleRemoveHeader(index)}
+                                                >
+                                                    <Remove />
+                                                </IconButton>
+                                            </InputAdornment>
+                                            }
+                                        </>
                                     ),
                                 }}
                             />

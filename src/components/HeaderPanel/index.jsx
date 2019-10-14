@@ -51,6 +51,7 @@ const HeaderPanel = props => {
                                     value={header.key}
                                     onChange={handleHeaderOnChange}
                                     name="key"
+                                    autoComplete="off"
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -60,9 +61,10 @@ const HeaderPanel = props => {
                                     onChange={handleHeaderOnChange}
                                     name="value"
                                     onKeyPress={onPressEnter}
+                                    autoComplete="off"
                                     InputProps={{
                                         endAdornment: (
-                                            <InputAdornment position="end">
+                                            <InputAdornment position = "end" >
                                                 <IconButton
                                                     edge="end"
                                                     onClick={handleAddHeader}
@@ -70,9 +72,9 @@ const HeaderPanel = props => {
                                                     <Add />
                                                 </IconButton>
                                             </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                            ),
+                        }}
+                    />
                             </Grid>
                         </Grid>
                         <HeadersFields handleRemoveHeader={handleRemoveHeader} headers={headersState} />

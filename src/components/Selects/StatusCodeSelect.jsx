@@ -30,7 +30,7 @@ const StatusCodeSelect = props => {
     }
 
     const handleClickDeleteIcon = () =>
-        setState({ ...state, customCode: false })
+        setState({ statusCode: 200, customCode: false })
 
     const handleMouseDownDeleteIcon = event =>
         event.preventDefault();
@@ -47,6 +47,7 @@ const StatusCodeSelect = props => {
                     value={state.statusCode}
                     onChange={handleChange}
                     name="StatusCode"
+                    autoComplete= "off"
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">

@@ -7,13 +7,15 @@ import Add from '@material-ui/icons/Add';
 import { httpMethods } from '../../assets/httpmethods'
 
 const HttpMethodSelect = props => {
-    const { disable = false, handleMethodChange, value, currentMethods, handleSelectClose } = props
+    const { disable = false, mini = false, handleMethodChange, value, currentMethods, handleSelectClose } = props
     const classes = useStyles();
     const [state, setState] = useState({ customMethod: false, httpMethod: value });
 
     const handleChange = event => {
         if (state.customMethod) {
             setState({ ...state, httpMethod: event.target.value.toUpperCase() })
+            if (mini)
+                handleMethodChange && handleMethodChange(event)
         }
         else if (event.target.value === 0)
             setState({ ...state, customMethod: true })
@@ -30,7 +32,10 @@ const HttpMethodSelect = props => {
     }
 
     const onCloseIconClick = event => {
-        handleSelectClose && handleSelectClose(event)
+        if (mini)
+            setState({ ...state, customMethod: false })
+        else
+            handleSelectClose && handleSelectClose(event)
     }
     const handleMethodSelectClose = event => {
         if (event.target.value !== 0) {
@@ -59,8 +64,8 @@ const HttpMethodSelect = props => {
                     onChange={handleChange}
                     name="HttpMethod"
                     onKeyPress={onPressEnter}
+                    autoComplete="off"
                     InputProps={{
-                        autoComplete: "off",
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
@@ -70,13 +75,13 @@ const HttpMethodSelect = props => {
                                 >
                                     <Close />
                                 </IconButton>
-                                <IconButton
+                                {!mini && <IconButton
                                     edge="end"
                                     onClick={onAddIconClick}
                                     onMouseDown={handleMouseDownIcon}
                                 >
                                     <Add />
-                                </IconButton>
+                                </IconButton>}
                             </InputAdornment>
                         ),
                     }}
@@ -86,7 +91,7 @@ const HttpMethodSelect = props => {
                     <InputLabel htmlFor="type-simple">add mock</InputLabel>
                     <Select
                         value={state.httpMethod}
-                        open={true}
+                        open={mini ? undefined : true}
                         label="Method"
                         onClose={handleMethodSelectClose}
                         onChange={handleChange}

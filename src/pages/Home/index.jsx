@@ -17,10 +17,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Save from '@material-ui/icons/Save';
 import Tabs from '../../components/Tabs';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import GitHubIcon from '../../icons/GitHubIcon'
 import useStyles from './styles'
-
+import MiniPostman from '../../components/MiniPostman'
 const Home = () => {
   const classes = useStyles();
   const theme = useTheme();
@@ -86,6 +86,12 @@ const Home = () => {
             <ListItemIcon><Save /></ListItemIcon>
             <ListItemText primary={"Create Mock"} />
           </ListItem>
+          <Link to={'/postman'} className={classes.link} >
+            <ListItem button key={"Mini Postman"}>
+              <ListItemIcon><Save /></ListItemIcon>
+              <ListItemText primary={"Mini Postman"} />
+            </ListItem>
+          </Link>
           <ListItem button key={"GitHub"} onClick={() => window.location.href = "https://github.com/mockercloud/mockercloud.github.io"}>
             <ListItemIcon><GitHubIcon /></ListItemIcon>
             <ListItemText primary={"GitHub"} />
@@ -97,6 +103,7 @@ const Home = () => {
         <div className={classes.toolbar} />
         <Switch>
           <Route exact path='/' component={() => <Tabs ref={childRef} />} />
+          <Route path='/postman' component={MiniPostman} />
         </Switch>
       </main>
     </div>
