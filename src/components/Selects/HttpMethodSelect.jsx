@@ -46,7 +46,7 @@ const HttpMethodSelect = props => {
         event.preventDefault();
 
     const onPressEnter = event => {
-        var keyCode = event.keyCode || event.which;
+        let keyCode = event.keyCode || event.which;
         if (keyCode == '13') {
             onAddIconClick(event)
             return false;

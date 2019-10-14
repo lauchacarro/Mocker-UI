@@ -34,11 +34,11 @@ export const validateJson = str => {
 
 //XML HTML and XHTML
 export const validateXML = text => {
-
+    let xmlDoc;
     if (document.implementation.createDocument) {
         try {
-            var parser = new DOMParser();
-            var xmlDoc = parser.parseFromString(text, "application/xml");
+            let parser = new DOMParser();
+            xmlDoc = parser.parseFromString(text, "application/xml");
         }
         catch (err) {
             return false;

@@ -27,7 +27,7 @@ const HeaderPanel = props => {
         handleChangeHeaders && handleChangeHeaders(headersState)
     }
     const onPressEnter = event => {
-        var keyCode = event.keyCode || event.which;
+        let keyCode = event.keyCode || event.which;
         if (keyCode == '13') {
             handleAddHeader(event)
             return false;
