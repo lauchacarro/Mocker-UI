@@ -26,5 +26,12 @@ export const useStyles = makeStyles((theme) => ({
         borderRight: `1px solid ${theme.palette.divider}`,
         borderLeft: `1px solid ${theme.palette.divider}`,
     },
+    responseTextArea : {
+        width: "100%", 
+        height: "20vh" 
+    },
+    tabPanel: {
+        width: "80vw"
+    }
 
 }));

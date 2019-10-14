@@ -22,6 +22,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AllTabProps from '../Tabs/AllTabProps'
 import TabBodyHeader from '../Tabs/TabBodyHeader'
 import Loading from '../Loading'
+import ExpansionPanelResponse from './ExpansionPanelResponse'
 
 const MiniPostman = () => {
     const classes = useStyles();
@@ -71,13 +72,7 @@ const MiniPostman = () => {
 
     }
 
-    const headersToObject = headers => {
-        let headersObj = []
-        for (const pair of headers.entries()) {
-            headersObj.push({ key: pair[0], value: pair[1] })
-        }
-        return headersObj
-    }
+
 
     const sendRequest = (e) => {
         setIsLoading(true)
@@ -153,7 +148,7 @@ const MiniPostman = () => {
                                         onChangeIndex={handleTabChangeIndex(setTabRequestValue)}
                                     >
 
-                                        <TabPanel value={tabRequestValue} index={0} dir={theme.direction} style={{ width: "80vw" }}>
+                                        <TabPanel value={tabRequestValue} index={0} dir={theme.direction} className={classes.tabPanel}>
                                             <Tabs
 
                                                 value={tabRequestBodyValue}
@@ -198,49 +193,15 @@ const MiniPostman = () => {
                                                 </TabPanel>
                                             </SwipeableViews>
                                         </TabPanel>
-                                        <TabPanel value={tabRequestValue} index={1} dir={theme.direction} style={{ width: "80vw" }}>
+                                        <TabPanel value={tabRequestValue} index={1} dir={theme.direction} className={classes.tabPanel}>
                                             <EditableTable title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} editable={true} />
                                         </TabPanel>
-
                                     </SwipeableViews>
                                 </Grid>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                         {response.headers &&
-                            <ExpansionPanel className={classes.expansionFullWidth}>
-                                <ExpansionPanelSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-
-                                >
-                                    <div style={{ width: "100%" }}>
-                                        <Typography className={classes.heading}>Response</Typography>
-
-                                    </div>
-                                    <div style={{ width: "100%", textAlign: "right" }}>
-                                        <label style={{ color: "green" }}>{response.statusCode + " " + response.statusText}</label>
-                                    </div>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails >
-                                    <Grid container>
-                                        <TabBodyHeader color="secondary" onChange={handleTabChange(setTabResponseValue)} value={tabResponseValue} />
-                                        <SwipeableViews
-                                            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                                            index={tabResponseValue}
-                                            onChangeIndex={handleTabChangeIndex(setTabResponseValue)}
-                                        >
-
-                                            <TabPanel value={tabResponseValue} index={0} dir={theme.direction} style={{ width: "80vw" }}>
-                                                <textarea style={{ width: "100%", height: "20vh" }} value={response.body}></textarea>
-                                            </TabPanel>
-                                            <TabPanel value={tabResponseValue} index={1} dir={theme.direction} style={{ width: "80vw" }}>
-                                                <EditableTable data={headersToObject(response.headers)} title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} />
-                                            </TabPanel>
-                                        </SwipeableViews>
-                                    </Grid>
-                                </ExpansionPanelDetails>
-                            </ExpansionPanel>}
+                            <ExpansionPanelResponse handleTabChange={handleTabChange(setTabResponseValue)} handleTabChangeIndex={handleTabChangeIndex(setTabResponseValue)} handleTableUpdateData={handleTableUpdateData("headers")} response={response} tabResponseValue={tabResponseValue} />}
                     </Grid>
                 </Paper>}
         </>
