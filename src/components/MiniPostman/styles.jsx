@@ -7,14 +7,23 @@ export const useStyles = makeStyles((theme) => ({
     center: {
         textAlign: "center"
     },
+    right: {
+        textAlign: "right"
+    },
     orange: {
         color: "#ff8614"
+    },
+    green: {
+        color: "green"
     },
     title: {
         padding: "30px"
     },
     button: {
         margin: theme.spacing(2),
+    },
+    width100: {
+        width: "100%",
     },
     paperFullWidth: {
         width: "60vw",
@@ -32,6 +41,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     tabPanel: {
         width: "80vw"
+    },
+    paddingRigth20: {
+        paddingRight: "20px"
     }
 
 }));

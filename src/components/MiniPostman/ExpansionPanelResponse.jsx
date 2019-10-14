@@ -41,9 +41,9 @@ const ExpansionPanelResponse = props => {
                 <div style={{ width: "100%" }}>
                     <Typography className={classes.heading}>Response</Typography>
                 </div>
-                <div style={{ width: "100%", textAlign: "right" }}>
-                    <label style={{ color: "green", paddingRight: "20px" }}>{response.statusCode + " " + response.statusText}</label>
-                    <label style={{ color: "green" }}>{response.time}</label>
+                <div className={`${classes.width100} ${classes.right}`}>
+                    <label className={`${classes.green} ${classes.paddingRigth20}`}>{response.statusCode + " " + response.statusText}</label>
+                    <label className={classes.green}>{response.time}</label>
                 </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails >
