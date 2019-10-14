@@ -40,6 +40,13 @@ const HttpMethodSelect = props => {
     const handleMouseDownIcon = event =>
         event.preventDefault();
 
+    const onPressEnter = event => {
+        var keyCode = event.keyCode || event.which;
+        if (keyCode == '13') {
+            onAddIconClick(event)
+            return false;
+        }
+    }
     return (
         <FormControl className={clsx(classes.formControl, classes.paddingBottom20)} disabled={disable} >
 
@@ -51,7 +58,7 @@ const HttpMethodSelect = props => {
                     value={state.httpMethod}
                     onChange={handleChange}
                     name="HttpMethod"
-                    
+                    onKeyPress={onPressEnter}
                     InputProps={{
                         autoComplete: "off",
                         endAdornment: (

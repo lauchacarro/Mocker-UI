@@ -26,6 +26,13 @@ const HeaderPanel = props => {
         setHeadersState(headersState.filter((value, indexHeader) => indexHeader !== index))
         handleChangeHeaders && handleChangeHeaders(headersState)
     }
+    const onPressEnter = event => {
+        var keyCode = event.keyCode || event.which;
+        if (keyCode == '13') {
+            handleAddHeader(event)
+            return false;
+        }
+    }
     return (
         <div className={classes.root} >
             <ExpansionPanel TransitionProps={{ unmountOnExit: true }} disabled={disabled}>
@@ -52,6 +59,7 @@ const HeaderPanel = props => {
                                     value={header.value}
                                     onChange={handleHeaderOnChange}
                                     name="value"
+                                    onKeyPress={onPressEnter}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
