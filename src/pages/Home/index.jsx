@@ -19,6 +19,8 @@ import Save from '@material-ui/icons/Save';
 import Tabs from '../../components/Tabs';
 import { Switch, Route, Link } from 'react-router-dom';
 import GitHubIcon from '../../icons/GitHubIcon'
+import HomeIcon from '../../icons/HomeIcon'
+import PostmanIcon from '../../icons/PostmanIcon'
 import useStyles from './styles'
 import MiniPostman from '../../components/MiniPostman'
 const Home = () => {
@@ -81,14 +83,23 @@ const Home = () => {
         </div>
         <Divider />
         <List>
-
-          <ListItem button key={"Create Mock"} onClick={() => childRef.current.save()}>
-            <ListItemIcon><Save /></ListItemIcon>
-            <ListItemText primary={"Create Mock"} />
-          </ListItem>
+          {window.location.pathname !== '/' &&
+            <Link to={'/'} className={classes.link} >
+              <ListItem button key={"Home"}>
+                <ListItemIcon><HomeIcon /></ListItemIcon>
+                <ListItemText primary={"Home"} />
+              </ListItem>
+            </Link>
+          }
+          {window.location.pathname === '/' &&
+            <ListItem button key={"Create Mock"} onClick={() => childRef.current.save()}>
+              <ListItemIcon><Save /></ListItemIcon>
+              <ListItemText primary={"Create Mock"} />
+            </ListItem>
+          }
           <Link to={'/postman'} className={classes.link} >
             <ListItem button key={"Mini Postman"}>
-              <ListItemIcon><Save /></ListItemIcon>
+              <ListItemIcon><PostmanIcon /></ListItemIcon>
               <ListItemText primary={"Mini Postman"} />
             </ListItem>
           </Link>

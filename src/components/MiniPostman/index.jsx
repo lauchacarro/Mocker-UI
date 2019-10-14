@@ -109,7 +109,7 @@ const MiniPostman = () => {
         let response = {}
         let headers = new Headers();
         if (requestHeader.length > 0) {
-            requestHeader.map((item, index) => {
+            requestHeader.map((item) => {
                 headers.append(item.key, item.value)
             })
         }
