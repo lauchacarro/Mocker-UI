@@ -28,7 +28,7 @@ const MiniPostman = () => {
     const classes = useStyles();
     const theme = useTheme();
     const [tabRequestValue, setTabRequestValue] = useState(0)
-    const [tabResponseValue, setTabResponseValue] = useState(0)
+    
     const [tabRequestBodyValue, setTabRequestBodyValue] = useState(0)
     const [requestHeader, setRequestHeader] = useState([])
     const [requestFormData, setRequestFormData] = useState([])
@@ -51,6 +51,46 @@ const MiniPostman = () => {
 
     const handleChangeIndex = callbackState => (index) => callbackState(index);
 
+    const returnDiffToText = timeDiff => {
+        // obtenemos los segundos
+        timeDiff = timeDiff / 1000;
+
+        let result = "";
+        if (timeDiff < 60) {
+            // unicamente mostraremos los segundos
+            result = timeDiff + " segundos";
+        } else {
+            // cogemos la parte entera de los segundos
+            let seconds = Math.round(timeDiff % 60);
+
+            // restamos los segundos que hemos cogido
+            timeDiff = Math.floor(timeDiff / 60);
+
+            // cogemos los minutos
+            let minutes = Math.round(timeDiff % 60);
+
+            // restamos los minutos que hemos cogido
+            timeDiff = Math.floor(timeDiff / 60);
+
+            // cogemos las horas
+            let hours = Math.round(timeDiff % 24);
+
+            // restamos las horas que hemos cogido
+            timeDiff = Math.floor(timeDiff / 24);
+
+            // el resto, son dias
+            let days = timeDiff;
+
+            if (days > 0) {
+                result = days + " días, " + hours + " horas, " + minutes + " minutos y " + seconds + " segundos";
+            } else if (hours > 0) {
+                result = hours + " horas, " + minutes + " minutos y " + seconds + " segundos";
+            } else {
+                result = minutes + " minutos y " + seconds + " segundos";
+            }
+        }
+        return result;
+    }
 
     const handleTableUpdateData = name => newData => {
 
@@ -84,7 +124,7 @@ const MiniPostman = () => {
             })
         }
         let request = { method: requestMethod, headers: headers }
-
+        let startTime = new Date();
         fetch(requestUrl, request)
             .then(responsefetch => {
                 response.statusCode = responsefetch.status
@@ -96,7 +136,8 @@ const MiniPostman = () => {
                 if (data && data != null) {
                     response.body = data
                     response.bodySize = encodeURI(data).split(/%..|./).length - 1
-
+                    let endTime = new Date();
+                    response.time = returnDiffToText(endTime-startTime)
                     setResponse(response)
                 }
                 setIsLoading(false)
@@ -201,7 +242,7 @@ const MiniPostman = () => {
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                         {response.headers &&
-                            <ExpansionPanelResponse handleTabChange={handleTabChange(setTabResponseValue)} handleTabChangeIndex={handleTabChangeIndex(setTabResponseValue)} handleTableUpdateData={handleTableUpdateData("headers")} response={response} tabResponseValue={tabResponseValue} />}
+                            <ExpansionPanelResponse response={response} />}
                     </Grid>
                 </Paper>}
         </>

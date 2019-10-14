@@ -1,33 +1,29 @@
 import React, { useState } from 'react'
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import SwipeableViews from 'react-swipeable-views';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import TabPanel from '../Tabs/TabPanel';
-import Paper from '@material-ui/core/Paper';
 import { useTheme } from '@material-ui/core/styles';
 import { useStyles } from './styles'
-import HttpMethodSelect from '../Selects/HttpMethodSelect'
 import EditableTable from './EditableTable'
-import SandBox from '../SandBox'
-import DropzoneArea from '../DropzoneArea';
-import ContentTypeSelect from '../Selects/ContentTypeSelect'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AllTabProps from '../Tabs/AllTabProps'
 import TabBodyHeader from '../Tabs/TabBodyHeader'
-import Loading from '../Loading'
 
 const ExpansionPanelResponse = props => {
-    const { handleTabChange, handleTabChangeIndex, handleTableUpdateData, response, tabResponseValue } = props
-
+    const { response } = props
+    const [tabResponseValue, setTabResponseValue] = useState(0)
     const classes = useStyles();
     const theme = useTheme();
+    const handleTabChangeIndex = (index) => {
+        setTabResponseValue(index)
+    }
+    const handleTabChange = (event, newValue) => {
+        setTabResponseValue(newValue)
+    }
+
     const headersToObject = headers => {
         let headersObj = []
         for (const pair of headers.entries()) {
@@ -41,14 +37,13 @@ const ExpansionPanelResponse = props => {
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
-
             >
                 <div style={{ width: "100%" }}>
                     <Typography className={classes.heading}>Response</Typography>
-
                 </div>
                 <div style={{ width: "100%", textAlign: "right" }}>
-                    <label style={{ color: "green" }}>{response.statusCode + " " + response.statusText}</label>
+                    <label style={{ color: "green", paddingRight: "20px" }}>{response.statusCode + " " + response.statusText}</label>
+                    <label style={{ color: "green" }}>{response.time}</label>
                 </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails >
@@ -64,7 +59,7 @@ const ExpansionPanelResponse = props => {
                             <textarea className={classes.responseTextArea} value={response.body}></textarea>
                         </TabPanel>
                         <TabPanel value={tabResponseValue} index={1} dir={theme.direction} className={classes.tabPanel}>
-                            <EditableTable data={headersToObject(response.headers)} title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} />
+                            <EditableTable data={headersToObject(response.headers)} title={"Headers"} />
                         </TabPanel>
                     </SwipeableViews>
                 </Grid>
