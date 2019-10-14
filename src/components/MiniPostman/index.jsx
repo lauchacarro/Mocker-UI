@@ -7,7 +7,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TabPanel from '../Tabs/TabPanel';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
+import { useStyles } from './styles'
 import HttpMethodSelect from '../Selects/HttpMethodSelect'
 import EditableTable from './EditableTable'
 import SandBox from '../SandBox'
@@ -19,39 +20,14 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AllTabProps from '../Tabs/AllTabProps'
+import TabBodyHeader from '../Tabs/TabBodyHeader'
 import Loading from '../Loading'
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1
-    },
-    center: {
-        textAlign: "center"
-    },
-    orange: {
-        color: "#ff8614"
-    },
-    title: {
-        padding: "30px"
-    },
-    button: {
-        margin: theme.spacing(2),
-    },
-    paperFullWidth: {
-        width: "60vw",
-    },
-    expansionFullWidth: {
-        width: "90vw",
-    },
-    tabs: {
-        borderRight: `1px solid ${theme.palette.divider}`,
-        borderLeft: `1px solid ${theme.palette.divider}`,
-    },
 
-}));
 const MiniPostman = () => {
     const classes = useStyles();
     const theme = useTheme();
     const [tabRequestValue, setTabRequestValue] = useState(0)
+    const [tabResponseValue, setTabResponseValue] = useState(0)
     const [tabRequestBodyValue, setTabRequestBodyValue] = useState(0)
     const [requestHeader, setRequestHeader] = useState([])
     const [requestFormData, setRequestFormData] = useState([])
@@ -68,11 +44,11 @@ const MiniPostman = () => {
 
     const handleBodyContentTypeChange = event => setRequestBodyContentType(event.target.value)
 
-    const handleTabRequestChange = (event, newValue) => setTabRequestValue(newValue);
+    const handleTabChange = callbackState => (event, newValue) => callbackState(newValue);
 
-    const handleTabRequestChangeIndex = (index) => setTabRequestValue(index);
+    const handleTabChangeIndex = callbackState => (index) => callbackState(index);
 
-    const handleChangeIndex = (index) => setTabRequestValue(index);
+    const handleChangeIndex = callbackState => (index) => callbackState(index);
 
 
     const handleTableUpdateData = name => newData => {
@@ -170,27 +146,11 @@ const MiniPostman = () => {
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails >
                                 <Grid container>
-
-                                    <Grid item xs={12}>
-
-                                        <Tabs
-                                            value={tabRequestValue}
-                                            onChange={handleTabRequestChange}
-                                            indicatorColor="primary"
-                                            textColor="primary"
-                                            variant="fullWidth"
-                                            aria-label="full width tabs example"
-                                            centered
-                                        >
-                                            <Tab label="Body" {...AllTabProps(0)} />
-                                            <Tab label="Headers" {...AllTabProps(1)} />
-                                        </Tabs>
-
-                                    </Grid>
+                                    <TabBodyHeader color="primary" onChange={handleTabChange(setTabRequestValue)} value={tabRequestValue} />
                                     <SwipeableViews
                                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                                         index={tabRequestValue}
-                                        onChangeIndex={handleTabRequestChangeIndex}
+                                        onChangeIndex={handleTabChangeIndex(setTabRequestValue)}
                                     >
 
                                         <TabPanel value={tabRequestValue} index={0} dir={theme.direction} style={{ width: "80vw" }}>
@@ -264,32 +224,17 @@ const MiniPostman = () => {
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails >
                                     <Grid container>
-                                        <Grid item xs={12}>
-
-                                        <Tabs
-                                            value={tabRequestValue}
-                                            onChange={handleTabRequestChange}
-                                            indicatorColor="secondary"
-                                            textColor="secondary"
-                                            variant="fullWidth"
-                                            aria-label="full width tabs example"
-                                            centered
-                                        >
-                                            <Tab label="Body" {...AllTabProps(0)} />
-                                            <Tab label="Headers" {...AllTabProps(1)} />
-                                        </Tabs>
-
-                                        </Grid>
+                                        <TabBodyHeader color="secondary" onChange={handleTabChange(setTabResponseValue)} value={tabResponseValue} />
                                         <SwipeableViews
                                             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                                            index={tabRequestValue}
-                                            onChangeIndex={handleTabRequestChangeIndex}
+                                            index={tabResponseValue}
+                                            onChangeIndex={handleTabChangeIndex(setTabResponseValue)}
                                         >
 
-                                            <TabPanel value={tabRequestValue} index={0} dir={theme.direction} style={{ width: "80vw" }}>
+                                            <TabPanel value={tabResponseValue} index={0} dir={theme.direction} style={{ width: "80vw" }}>
                                                 <textarea style={{ width: "100%", height: "20vh" }} value={response.body}></textarea>
                                             </TabPanel>
-                                            <TabPanel value={tabRequestValue} index={1} dir={theme.direction} style={{ width: "80vw" }}>
+                                            <TabPanel value={tabResponseValue} index={1} dir={theme.direction} style={{ width: "80vw" }}>
                                                 <EditableTable data={headersToObject(response.headers)} title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} />
                                             </TabPanel>
                                         </SwipeableViews>
