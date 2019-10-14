@@ -9,12 +9,13 @@ class EditableTable extends React.Component {
                 { title: 'Key', field: 'key' },
                 { title: 'Value', field: 'value' }
             ],
-            data: [],
-            title: props.title
+            data: props.data ? props.data : [],
+            title: props.title,
+            editable: props.editable
         }
     }
-    componentDidUpdate(){
-        if(this.props.handleTableUpdateData){
+    componentDidUpdate() {
+        if (this.props.handleTableUpdateData) {
             this.props.handleTableUpdateData(this.state.data)
         }
     }
@@ -28,12 +29,8 @@ class EditableTable extends React.Component {
                 options={{
                     search: false,
                     paging: false,
-                    // showTitle: false,
-                    rowStyle: {
-
-                    }
                 }}
-                editable={{
+                editable={this.state.editable && {
                     onRowAdd: newData =>
                         new Promise((resolve, reject) => {
                             {

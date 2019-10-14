@@ -20,7 +20,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AllTabProps from '../Tabs/AllTabProps'
 import Loading from '../Loading'
-import HeadersFields from '../HeaderPanel/HeadersFields'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1
@@ -219,10 +218,10 @@ const MiniPostman = () => {
                                                 <TabPanel value={tabRequestBodyValue} index={0}>
                                                 </TabPanel>
                                                 <TabPanel value={tabRequestBodyValue} index={1}>
-                                                    <EditableTable title={"Form Data"} handleTableUpdateData={handleTableUpdateData("formdata")} />
+                                                    <EditableTable title={"Form Data"} handleTableUpdateData={handleTableUpdateData("formdata")} editable={true} />
                                                 </TabPanel>
                                                 <TabPanel value={tabRequestBodyValue} index={2}>
-                                                    <EditableTable title={"X WWW Form Urlencoded"} handleTableUpdateData={handleTableUpdateData("formurlencoded")} />
+                                                    <EditableTable title={"X WWW Form Urlencoded"} handleTableUpdateData={handleTableUpdateData("formurlencoded")} editable={true} />
                                                 </TabPanel>
                                                 <TabPanel value={tabRequestBodyValue} index={3}>
                                                     <Paper className={classes.paperFullWidth}>
@@ -240,7 +239,7 @@ const MiniPostman = () => {
                                             </SwipeableViews>
                                         </TabPanel>
                                         <TabPanel value={tabRequestValue} index={1} dir={theme.direction} style={{ width: "80vw" }}>
-                                            <EditableTable title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} />
+                                            <EditableTable title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} editable={true} />
                                         </TabPanel>
 
                                     </SwipeableViews>
@@ -260,28 +259,44 @@ const MiniPostman = () => {
 
                                     </div>
                                     <div style={{ width: "100%", textAlign: "right" }}>
-                                        <label style={{ color: "green" }}>{ response.statusCode + " " +  response.statusText}</label>
+                                        <label style={{ color: "green" }}>{response.statusCode + " " + response.statusText}</label>
                                     </div>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails >
                                     <Grid container>
-
                                         <Grid item xs={12}>
-                                            <textarea style={{ width: "100%", height: "20vh" }} value={response.body}></textarea>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Typography className={classes.heading}>Headers</Typography>
+
+                                        <Tabs
+                                            value={tabRequestValue}
+                                            onChange={handleTabRequestChange}
+                                            indicatorColor="secondary"
+                                            textColor="secondary"
+                                            variant="fullWidth"
+                                            aria-label="full width tabs example"
+                                            centered
+                                        >
+                                            <Tab label="Body" {...AllTabProps(0)} />
+                                            <Tab label="Headers" {...AllTabProps(1)} />
+                                        </Tabs>
 
                                         </Grid>
+                                        <SwipeableViews
+                                            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                                            index={tabRequestValue}
+                                            onChangeIndex={handleTabRequestChangeIndex}
+                                        >
 
-                                        <Grid item xs={6}>
-                                            <HeadersFields headers={headersToObject(response.headers)} />
-                                        </Grid>
+                                            <TabPanel value={tabRequestValue} index={0} dir={theme.direction} style={{ width: "80vw" }}>
+                                                <textarea style={{ width: "100%", height: "20vh" }} value={response.body}></textarea>
+                                            </TabPanel>
+                                            <TabPanel value={tabRequestValue} index={1} dir={theme.direction} style={{ width: "80vw" }}>
+                                                <EditableTable data={headersToObject(response.headers)} title={"Headers"} handleTableUpdateData={handleTableUpdateData("headers")} />
+                                            </TabPanel>
+                                        </SwipeableViews>
                                     </Grid>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>}
                     </Grid>
-
                 </Paper>}
         </>
 
