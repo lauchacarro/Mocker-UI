@@ -108,14 +108,13 @@ const MiniPostman = () => {
                 response.statusCode = responsefetch.status
                 response.statusText = responsefetch.statusText
                 response.headers = responsefetch.headers
-                
+
                 return responsefetch.text()
             })
             .then(data => {
                 if (data && data != null) {
                     response.body = data
                     response.bodySize = encodeURI(data).split(/%..|./).length - 1
-                    console.log(response.bodySize)
                 }
             })
     }
@@ -149,7 +148,7 @@ const MiniPostman = () => {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
-                        
+
                     >
                         <Typography className={classes.heading}>Settings</Typography>
                     </ExpansionPanelSummary>

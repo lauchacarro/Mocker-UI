@@ -1,45 +1,33 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
-const useStyles = makeStyles(theme => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-        paddingBottom: "50px"
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
+import React, { useState } from 'react';
+import clsx from 'clsx';
+import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import useStyles from './styles'
+import { contentTypes } from '../../assets/contentTypes'
 
 const ContentTypeSelect = props => {
     const { disable, handleChangeContentType, value } = props
+    const [contentTypeState, setContentTypeState] = useState(value)
     const classes = useStyles();
 
+    const handleChangeValue = (event) => {
+        setContentTypeState(event.target.value)
+        handleChangeContentType && handleChangeContentType(event);
+    }
+
     return (
-        <FormControl className={classes.formControl} disabled={disable}>
+        <FormControl className={clsx(classes.formControl, classes.paddingBottom50)} disabled={disable}>
             <InputLabel htmlFor="type-simple">Content Type</InputLabel>
             <Select
-                value={value}
-                onChange={handleChangeContentType}
+                value={contentTypeState}
+                onChange={handleChangeValue}
                 inputProps={{
                     name: 'ContentType',
                     id: 'type-simple',
                 }}
             >
-                <MenuItem value={"application/json"}>JSON</MenuItem>
-                <MenuItem value={"text/html"}>HTML</MenuItem>
-                <MenuItem value={"application/xhtml+xml"}>XHTML</MenuItem>
-                <MenuItem value={"application/xml"}>XML</MenuItem>
-                <MenuItem value={"application/javascript"}>Javascript</MenuItem>
-                <MenuItem value={"multipart/form-data"}>Form Data</MenuItem>
-                <MenuItem value={"text/css"}>CSS</MenuItem>
-                <MenuItem value={"text/csv"}>CSV</MenuItem>
-                <MenuItem value={"text/plain"}>Text Plain</MenuItem>
+                {contentTypes.map((contentType) => {
+                    return <MenuItem value={contentType.fullname}>{contentType.alias}</MenuItem>
+                })}
             </Select>
         </FormControl>
     )

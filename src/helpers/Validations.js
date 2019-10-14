@@ -1,9 +1,29 @@
 
+const ValidateMock = (mock) => {
+    if (mock.Active && mock.ContentType === "application/json" && !validateJson(mock.Body)) {
+        return {
+            error: true,
+            message: mock.HttpMethod + " body does not have a correct JSON format"
+        }
+    }
+    else if (mock.Active && mock.ContentType === "application/xml" && !validateXML(mock.Body)) {
+        return {
+            error: true,
+            message: mock.HttpMethod + " body does not have a correct XML format"
+        }
+    }
+    else {
+        return {
+            error: false
+        }
+    }
+}
+export default ValidateMock;
 
 export const validateJson = str => {
-    if (/^[\],:{}\s]*$/.test(str.replace(/\\["\\\/bfnrtu]/g, '@').
-        replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-        replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+    if (/^[\],:{}\s]*$/.test(str.replace(/\\["\\bfnrtu]/g, '@')
+        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+]?\d+)?/g, ']')
+        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
         return true
     } else {

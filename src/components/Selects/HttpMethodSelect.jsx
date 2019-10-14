@@ -1,54 +1,109 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
-const useStyles = makeStyles(theme => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-        paddingBottom: "50px"
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
+import React, { useState } from 'react';
+import clsx from 'clsx';
+import { InputLabel, MenuItem, FormControl, Select, TextField, IconButton, InputAdornment } from '@material-ui/core';
+import useStyles from './styles'
+import Close from '@material-ui/icons/Close';
+import Add from '@material-ui/icons/Add';
+import { httpMethods } from '../../assets/httpmethods'
 
 const HttpMethodSelect = props => {
-    const { disable, handleMethodChange, value } = props
+    const { disable = false, handleMethodChange, value, currentMethods, handleSelectClose } = props
     const classes = useStyles();
+    const [state, setState] = useState({ customMethod: false, httpMethod: value });
 
+    const handleChange = event => {
+        if (state.customMethod) {
+            setState({ ...state, httpMethod: event.target.value.toUpperCase() })
+        }
+        else if (event.target.value === 0)
+            setState({ ...state, customMethod: true })
+        else {
+            setState({ ...state, httpMethod: event.target.value.toUpperCase() })
+            handleMethodChange && handleMethodChange(event)
+        }
+    }
+
+    const onAddIconClick = event => {
+        setState({ ...state, customMethod: false })
+        event.target.value = state.httpMethod
+        handleMethodChange && handleMethodChange(event)
+    }
+
+    const onCloseIconClick = event => {
+        handleSelectClose && handleSelectClose(event)
+    }
+    const handleMethodSelectClose = event => {
+        if (event.target.value !== 0) {
+            handleSelectClose && handleSelectClose(event)
+        }
+    }
+    const handleMouseDownIcon = event =>
+        event.preventDefault();
+
+    const onPressEnter = event => {
+        var keyCode = event.keyCode || event.which;
+        if (keyCode == '13') {
+            onAddIconClick(event)
+            return false;
+        }
+    }
     return (
-        <FormControl className={classes.formControl} disabled={disable}>
-            <InputLabel htmlFor="type-simple">Method</InputLabel>
-            <Select
-                value={value}
-                label="Http Method"
+        <FormControl className={clsx(classes.formControl, classes.paddingBottom20)} disabled={disable} >
 
-                onChange={handleMethodChange}
-                inputProps={{
-                    name: 'ContentType',
-                    id: 'type-simple',
-                }}
-            >
-                <MenuItem value={"GET"}>GET</MenuItem>
-                <MenuItem value={"POST"}>POST</MenuItem>
-                <MenuItem value={"PUT"}>PUT</MenuItem>
-                <MenuItem value={"PATCH"}>PATCH</MenuItem>
-                <MenuItem value={"DELETE"}>DELETE</MenuItem>
-                <MenuItem value={"COPY"}>COPY</MenuItem>
-                <MenuItem value={"HEAD"}>HEAD</MenuItem>
-                <MenuItem value={"OPTIONS"}>OPTIONS</MenuItem>
-                <MenuItem value={"LINK"}>LINK</MenuItem>
-                <MenuItem value={"UNLINK"}>UNLINK</MenuItem>
-                <MenuItem value={"PURGE"}>PURGE</MenuItem>
-                <MenuItem value={"LOCK"}>LOCK</MenuItem>
-                <MenuItem value={"UNLOCK"}>UNLOCK</MenuItem>
-                <MenuItem value={"PROPFIND"}>PROPFIND</MenuItem>
-                <MenuItem value={"VIEW"}>VIEW</MenuItem>
-            </Select>
+            {state.customMethod ?
+                <TextField
+                    className={clsx(classes.margin, classes.textField)}
+                    type='text'
+                    label="Custom Mock"
+                    value={state.httpMethod}
+                    onChange={handleChange}
+                    name="HttpMethod"
+                    onKeyPress={onPressEnter}
+                    InputProps={{
+                        autoComplete: "off",
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    edge="end"
+                                    onClick={onCloseIconClick}
+                                    onMouseDown={handleMouseDownIcon}
+                                >
+                                    <Close />
+                                </IconButton>
+                                <IconButton
+                                    edge="end"
+                                    onClick={onAddIconClick}
+                                    onMouseDown={handleMouseDownIcon}
+                                >
+                                    <Add />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                :
+                <>
+                    <InputLabel htmlFor="type-simple">add mock</InputLabel>
+                    <Select
+                        value={state.httpMethod}
+                        open={true}
+                        label="Method"
+                        onClose={handleMethodSelectClose}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: 'HttpMethod',
+                            id: 'type-simple'
+                        }}
+                    >
+                        <MenuItem value={0}>Custom</MenuItem>
+                        {httpMethods.filter((httpMethod) => {
+                            return !currentMethods.includes(httpMethod.name)
+                        }).map((httpMethod) => {
+                            return <MenuItem value={httpMethod.name}>{httpMethod.name}</MenuItem>
+                        })}
+                    </Select>
+                </>
+            }
         </FormControl>
     )
 }
