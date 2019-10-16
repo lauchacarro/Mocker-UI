@@ -139,7 +139,7 @@ const MockTab = forwardRef((props, ref) => {
                         {mocks.map((mock, index) => {
                             return <Tab label={mock.HttpMethod} {...AllTabProps(index)} />
                         })}
-                        <Tab label={addingMock ? <HttpMethodSelect handleSelectClose={handleMethodSelectClose} handleMethodChange={handleMethodChange} currentMethods={currentMethods} /> : <Add />} {...AllTabProps(mocks.length)} />
+                        <Tab label={addingMock ? <HttpMethodSelect handleSelectClose={handleMethodSelectClose} handleMethodChange={handleMethodChange} currentMethods={currentMethods} title="Add Mock"/> : <Add />} {...AllTabProps(mocks.length)} />
 
                     </Tabs>
                     <SwipeableViews

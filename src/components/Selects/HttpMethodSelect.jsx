@@ -7,7 +7,7 @@ import Add from '@material-ui/icons/Add';
 import { httpMethods } from '../../assets/httpmethods'
 
 const HttpMethodSelect = props => {
-    const { disable = false, mini = false, handleMethodChange, value, currentMethods, handleSelectClose } = props
+    const { disable = false, mini = false, handleMethodChange, value, currentMethods, handleSelectClose, title } = props
     const classes = useStyles();
     const [state, setState] = useState({ customMethod: false, httpMethod: value });
 
@@ -88,7 +88,7 @@ const HttpMethodSelect = props => {
                 />
                 :
                 <>
-                    <InputLabel htmlFor="type-simple">add mock</InputLabel>
+                    <InputLabel htmlFor="type-simple">{title}</InputLabel>
                     <Select
                         value={state.httpMethod}
                         open={mini ? undefined : true}

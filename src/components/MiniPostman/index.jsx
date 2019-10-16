@@ -83,15 +83,36 @@ const MiniPostman = () => {
             setRequestHeader(data)
         }
         if (name === "formdata") {
-            const data = requestFormData;
-            data.push(newData);
-            setRequestFormData(data)
+            setRequestFormData(newData)
         }
         if (name === "formurlencoded") {
             const data = requestFormUrlEncoded;
             data.push(newData);
             setRequestFormUrlEncoded(data)
         }
+
+    }
+
+    const makeRequestBody = () => {
+        let body = undefined;
+
+        switch (tabRequestBodyValue) {
+            case 1:
+                body = new URLSearchParams();
+                for (let i = 0; i < requestFormData.length; i++) {
+                    body.append(requestFormData[i].key, requestFormData[i].value)
+                }
+                break;
+            case 2:
+                let formdata = new FormData();
+                for (let i = 0; i < requestFormData.length; i++) {
+                    formdata.append(requestFormData[i].key, requestFormData[i].value)
+                }
+                body = JSON.stringify(formdata)
+                break;
+        }
+
+        return body;
 
     }
 
@@ -103,8 +124,12 @@ const MiniPostman = () => {
             requestHeader.map((item) => {
                 headers.append(item.key, item.value)
             })
+            if (tabRequestBodyValue == 1 || tabRequestBodyValue == 2)
+                headers.append("Content-Type", 'application/x-www-form-urlencoded')
+
         }
-        let request = { method: requestMethod, headers: headers }
+        let body = makeRequestBody()
+        let request = { method: requestMethod, headers: headers, body: body }
         let startTime = new Date();
         fetch(requestUrl, request)
             .then(responsefetch => {
@@ -118,7 +143,7 @@ const MiniPostman = () => {
                     response.body = data
                     response.bodySize = encodeURI(data).split(/%..|./).length - 1
                     let endTime = new Date();
-                    response.time = returnDiffToText(endTime-startTime)
+                    response.time = returnDiffToText(endTime - startTime)
                     setResponse(response)
                 }
                 setIsLoading(false)
@@ -131,7 +156,7 @@ const MiniPostman = () => {
                     <h1 className={`${classes.center} ${classes.orange} ${classes.title}`} >Mini Postman</h1>
                     <Grid container>
                         <Grid item xs={12}>
-                            <HttpMethodSelect handleMethodChange={handleMethodChange} currentMethods={[]} value={requestMethod} mini={true} />
+                            <HttpMethodSelect handleMethodChange={handleMethodChange} currentMethods={[]} value={requestMethod} mini={true} title="Method"/>
                             <TextField
                                 id="standard-full-width"
                                 label="Request"
@@ -194,7 +219,7 @@ const MiniPostman = () => {
                                                 <TabPanel value={tabRequestBodyValue} index={0}>
                                                 </TabPanel>
                                                 <TabPanel value={tabRequestBodyValue} index={1}>
-                                                    <EditableTable title={"Form Data"} handleTableUpdateData={handleTableUpdateData("formdata")} editable={true} />
+                                                    <EditableTable title={"Form Data"} handleTableUpdateData={handleTableUpdateData("formdata")} editable={true} data={requestFormData} />
                                                 </TabPanel>
                                                 <TabPanel value={tabRequestBodyValue} index={2}>
                                                     <EditableTable title={"X WWW Form Urlencoded"} handleTableUpdateData={handleTableUpdateData("formurlencoded")} editable={true} />

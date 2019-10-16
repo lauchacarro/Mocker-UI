@@ -9,7 +9,7 @@ class EditableTable extends React.Component {
                 { title: 'Key', field: 'key' },
                 { title: 'Value', field: 'value' }
             ],
-            data: props.data ? props.data : [],
+            data: props.data && props.data.lenght > 0 ? props.data : [],
             title: props.title,
             editable: props.editable
         }
