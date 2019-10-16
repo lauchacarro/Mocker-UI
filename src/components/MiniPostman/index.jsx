@@ -34,6 +34,7 @@ const MiniPostman = () => {
     const [requestFormUrlEncoded, setRequestFormUrlEncoded] = useState([])
     const [requestMethod, setRequestMethod] = useState('GET')
     const [requestUrl, setRequestUrl] = useState('')
+    const [requestRaw, setRequestRaw] = useState('')
     const [requestBodyContentType, setRequestBodyContentType] = useState('application/json')
     const [response, setResponse] = useState({ body: '' })
     const [isLoading, setIsLoading] = useState(false)
@@ -49,6 +50,10 @@ const MiniPostman = () => {
     const handleTabChangeIndex = callbackState => (index) => callbackState(index);
 
     const handleChangeIndex = callbackState => (index) => callbackState(index);
+
+    const handleChangeSandBox = (editorName, value) => {
+        setRequestRaw(value)
+    }
 
     const returnDiffToText = timeDiff => {
         timeDiff = timeDiff / 1000;
@@ -78,17 +83,13 @@ const MiniPostman = () => {
     const handleTableUpdateData = name => newData => {
 
         if (name === "headers") {
-            const data = requestHeader;
-            data.push(newData);
-            setRequestHeader(data)
+            setRequestHeader(newData)
         }
         if (name === "formdata") {
             setRequestFormData(newData)
         }
         if (name === "formurlencoded") {
-            const data = requestFormUrlEncoded;
-            data.push(newData);
-            setRequestFormUrlEncoded(data)
+            setRequestFormUrlEncoded(newData)
         }
 
     }
@@ -98,17 +99,25 @@ const MiniPostman = () => {
 
         switch (tabRequestBodyValue) {
             case 1:
-                body = new URLSearchParams();
+                body = new FormData();
                 for (let i = 0; i < requestFormData.length; i++) {
-                    body.append(requestFormData[i].key, requestFormData[i].value)
+                    if (!isNaN(requestFormData[i].value)) {
+                        body.append(requestFormData[i].key, parseInt(requestFormData[i].value))
+                    }
+                    else {
+                        body.append(requestFormData[i].key, requestFormData[i].value)
+                    }
                 }
                 break;
             case 2:
-                let formdata = new FormData();
-                for (let i = 0; i < requestFormData.length; i++) {
-                    formdata.append(requestFormData[i].key, requestFormData[i].value)
+                let formdata = new URLSearchParams();
+                for (let i = 0; i < requestFormUrlEncoded.length; i++) {
+                    formdata.append(requestFormUrlEncoded[i].key, requestFormUrlEncoded[i].value)
                 }
-                body = JSON.stringify(formdata)
+                body = formdata
+                break;
+            case 3:
+                body = requestRaw
                 break;
         }
 
@@ -124,12 +133,19 @@ const MiniPostman = () => {
             requestHeader.map((item) => {
                 headers.append(item.key, item.value)
             })
-            if (tabRequestBodyValue == 1 || tabRequestBodyValue == 2)
-                headers.append("Content-Type", 'application/x-www-form-urlencoded')
-
         }
+
+        if (tabRequestBodyValue == 2)
+            headers.append("Content-Type", 'application/x-www-form-urlencoded')
+        if (tabRequestBodyValue == 3)
+            headers.append("Content-Type", requestBodyContentType)
+
+
+
+
         let body = makeRequestBody()
         let request = { method: requestMethod, headers: headers, body: body }
+        console.log(request)
         let startTime = new Date();
         fetch(requestUrl, request)
             .then(responsefetch => {
@@ -156,7 +172,7 @@ const MiniPostman = () => {
                     <h1 className={`${classes.center} ${classes.orange} ${classes.title}`} >Mini Postman</h1>
                     <Grid container>
                         <Grid item xs={12}>
-                            <HttpMethodSelect handleMethodChange={handleMethodChange} currentMethods={[]} value={requestMethod} mini={true} title="Method"/>
+                            <HttpMethodSelect handleMethodChange={handleMethodChange} currentMethods={[]} value={requestMethod} mini={true} title="Method" />
                             <TextField
                                 id="standard-full-width"
                                 label="Request"
@@ -230,7 +246,7 @@ const MiniPostman = () => {
                                                             <ContentTypeSelect value={requestBodyContentType} handleChangeContentType={handleBodyContentTypeChange} />
                                                         </Grid>
                                                         <Grid item xs={8} style={{ maxWidth: "100%" }}>
-                                                            <SandBox />
+                                                            <SandBox handleChangeSandBox={handleChangeSandBox} />
                                                         </Grid>
                                                     </Paper>
                                                 </TabPanel>
