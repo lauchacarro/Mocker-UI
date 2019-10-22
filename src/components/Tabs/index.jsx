@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {Tabs as MaterialTabs} from '@material-ui/core';
+import { Tabs as MaterialTabs } from '@material-ui/core';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
-import DropzoneArea from '../DropzoneArea';
+import CloudFileTab from './CloudFileTab';
 import MockTab from './MockTab';
 import TabPanel from './TabPanel'
 import AllTabProps from './AllTabProps'
@@ -48,10 +48,10 @@ const Tabs = forwardRef((props, ref) => {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    <MockTab ref={ref}/>
+                    <MockTab ref={ref} />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <DropzoneArea />
+                    <CloudFileTab />
                 </TabPanel>
             </SwipeableViews>
         </Paper>

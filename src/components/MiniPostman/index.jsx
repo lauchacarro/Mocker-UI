@@ -93,6 +93,9 @@ const MiniPostman = () => {
         }
 
     }
+    const onUploadFile = file => {
+        setRequestRaw(file)
+    }
 
     const makeRequestBody = () => {
         let body = undefined;
@@ -117,6 +120,7 @@ const MiniPostman = () => {
                 body = formdata
                 break;
             case 3:
+            case 4:
                 body = requestRaw
                 break;
         }
@@ -139,6 +143,8 @@ const MiniPostman = () => {
             headers.append("Content-Type", 'application/x-www-form-urlencoded')
         if (tabRequestBodyValue == 3)
             headers.append("Content-Type", requestBodyContentType)
+        if (tabRequestBodyValue == 4)
+            headers.append("Content-Type", 'text/plain')
 
 
 
@@ -251,7 +257,7 @@ const MiniPostman = () => {
                                                     </Paper>
                                                 </TabPanel>
                                                 <TabPanel value={tabRequestBodyValue} index={4}>
-                                                    <DropzoneArea />
+                                                    <DropzoneArea onUploadFile={onUploadFile} />
                                                 </TabPanel>
                                             </SwipeableViews>
                                         </TabPanel>
