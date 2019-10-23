@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 import Grid from '@material-ui/core/Grid';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
@@ -23,6 +24,7 @@ import AllTabProps from '../Tabs/AllTabProps'
 import TabBodyHeader from '../Tabs/TabBodyHeader'
 import Loading from '../Loading'
 import ExpansionPanelResponse from './ExpansionPanelResponse'
+import SnackbarContent from '../CustomSnackbarContent'
 
 const MiniPostman = () => {
     const classes = useStyles();
@@ -39,6 +41,7 @@ const MiniPostman = () => {
     const [requestBodyContentType, setRequestBodyContentType] = useState('application/json')
     const [response, setResponse] = useState({ body: '' })
     const [isLoading, setIsLoading] = useState(false)
+    const [openAlert, setOpenAlert] = useState(false)
 
     const handleMethodChange = event => setRequestMethod(event.target.value.toUpperCase())
 
@@ -54,6 +57,11 @@ const MiniPostman = () => {
 
     const handleChangeSandBox = (editorName, value) => {
         setRequestRaw(value)
+    }
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') return;
+        setOpenAlert(false)
     }
 
     const returnDiffToText = timeDiff => {
@@ -133,6 +141,10 @@ const MiniPostman = () => {
     }
 
     const sendRequest = (e) => {
+        if (!requestUrl || requestUrl.replace(/ /g,'').length <= 0) {
+            setOpenAlert(true)
+            return
+        }
         setIsLoading(true)
         let response = {}
         let headers = new Headers();
@@ -281,6 +293,21 @@ const MiniPostman = () => {
                             <ExpansionPanelResponse response={response} />}
                     </Grid>
                 </Paper>}
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                open={openAlert}
+                autoHideDuration={3000}
+                onClose={handleCloseAlert}
+            >
+                <SnackbarContent
+                    onClose={handleCloseAlert}
+                    variant="error"
+                    message="Request URL is empty"
+                />
+            </Snackbar>
         </>
 
     )
