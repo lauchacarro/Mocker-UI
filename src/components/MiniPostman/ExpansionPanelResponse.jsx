@@ -58,7 +58,7 @@ const ExpansionPanelResponse = props => {
                     >
 
                         <TabPanel value={tabResponseValue} index={0} dir={theme.direction} className={classes.tabPanel}>
-                            <textarea className={classes.responseTextArea} value={response.body}></textarea>
+                            <textarea className={classes.responseTextArea} value={response.body} readOnly ></textarea>
                         </TabPanel>
                         <TabPanel value={tabResponseValue} index={1} dir={theme.direction} className={classes.tabPanel}>
                             <EditableTable data={headersToObject(response.headers)} title={"Headers"} />
@@ -72,13 +72,13 @@ const ExpansionPanelResponse = props => {
 
 ExpansionPanelResponse.propTypes = {
     response: PropTypes.shape({
-        headers: PropTypes.array.isRequired,
+        headers: PropTypes.object.isRequired,
         body: PropTypes.string.isRequired,
         time: PropTypes.string.isRequired,
         statusCode: PropTypes.number.isRequired,
         statusText: PropTypes.string,
 
-      }).isRequired
+    }).isRequired
 }
 
 export default ExpansionPanelResponse;
