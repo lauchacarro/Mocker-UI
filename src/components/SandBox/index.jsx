@@ -13,14 +13,6 @@ const SandBox = props => {
       element.style.height = "100%"
     });
 
-    document.querySelectorAll('.sandbox-hide').forEach(element => {
-      element.parentElement.parentElement.style.width = "100%"
-      element.parentElement.parentElement.style.height = "100%"
-      element.parentElement.parentElement.style.position = "relative"
-      element.parentElement.parentElement.style.padding = "1px"
-      element.parentElement.parentElement.style.background = "linear-gradient(to right, rgb(4, 92, 255), rgb(255, 251, 0), rgb(197, 49, 12))"
-    });
-    
     document.querySelectorAll('#tabs-content > div:nth-child(4)').forEach(element => {
       element.remove()
     });
@@ -31,6 +23,14 @@ const SandBox = props => {
 
     document.querySelectorAll('#tabs-content > div:nth-child(2)').forEach(element => {
       element.style.height = "100%"
+    });
+
+    document.querySelectorAll('.sandbox-hide').forEach(element => {
+      element.parentElement.parentElement.style.width = "100%"
+      element.parentElement.parentElement.style.height = "100%"
+      element.parentElement.parentElement.style.position = "relative"
+      element.parentElement.parentElement.style.padding = "1px"
+      element.parentElement.parentElement.style.background = "linear-gradient(to right, rgb(4, 92, 255), rgb(255, 251, 0), rgb(197, 49, 12))"
     });
   })
 
