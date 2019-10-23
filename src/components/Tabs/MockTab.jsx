@@ -139,7 +139,7 @@ const MockTab = forwardRef((props, ref) => {
                         {mocks.map((mock, index) => {
                             return <Tab label={mock.HttpMethod} {...AllTabProps(index)} />
                         })}
-                        <Tab label={addingMock ? <HttpMethodSelect handleSelectClose={handleMethodSelectClose} handleMethodChange={handleMethodChange} currentMethods={currentMethods} title="Add Mock"/> : <Add />} {...AllTabProps(mocks.length)} />
+                        <Tab label={addingMock ? <HttpMethodSelect handleSelectClose={handleMethodSelectClose} handleMethodChange={handleMethodChange} currentMethods={currentMethods} title="Add Mock" /> : <Add />} {...AllTabProps(mocks.length)} />
 
                     </Tabs>
                     <SwipeableViews
@@ -149,9 +149,10 @@ const MockTab = forwardRef((props, ref) => {
                     >
                         {mocks.map((mock, index) => {
                             return <TabPanel value={tabindex} index={index} dir={theme.direction}>
-                                <HttpMethodMock classes={classes} mock={mock} handleChangeSandBox={handleChangeSandBox(mock.HttpMethod)} handleChangeSelect={handleChangeSelect(mock.HttpMethod)} handleChangeSwitch={handleChangeSwitch(mock.HttpMethod)} handleChangeHeaders={handleChangeHeaders(mock.HttpMethod)} needCheck={mock.HttpMethod !== "GET"} />
+                                {tabindex == index && <HttpMethodMock classes={classes} mock={mock} handleChangeSandBox={handleChangeSandBox(mock.HttpMethod)} handleChangeSelect={handleChangeSelect(mock.HttpMethod)} handleChangeSwitch={handleChangeSwitch(mock.HttpMethod)} handleChangeHeaders={handleChangeHeaders(mock.HttpMethod)} needCheck={mock.HttpMethod !== "GET"} />}
                             </TabPanel>
                         })}
+
 
                     </SwipeableViews>
                 </>
