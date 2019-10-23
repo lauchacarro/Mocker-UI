@@ -75,7 +75,7 @@ const StatusCodeSelect = props => {
                 >
                     <MenuItem value={0}>Custom</MenuItem>
                     {statusCodes.map((statusCode) => {
-                        return <MenuItem value={statusCode.code}>{statusCode.text}</MenuItem>
+                        return <MenuItem key={statusCode.code} value={statusCode.code}>{statusCode.text}</MenuItem>
                     })}
                 </Select>
             }

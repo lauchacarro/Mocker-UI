@@ -148,7 +148,7 @@ const MockTab = forwardRef((props, ref) => {
                         onChangeIndex={handleChangeTabIndex}
                     >
                         {mocks.map((mock, index) => {
-                            return <TabPanel value={tabindex} index={index} dir={theme.direction}>
+                            return <TabPanel key={index} value={tabindex} index={index} dir={theme.direction}>
                                 {tabindex == index && <HttpMethodMock classes={classes} mock={mock} handleChangeSandBox={handleChangeSandBox(mock.HttpMethod)} handleChangeSelect={handleChangeSelect(mock.HttpMethod)} handleChangeSwitch={handleChangeSwitch(mock.HttpMethod)} handleChangeHeaders={handleChangeHeaders(mock.HttpMethod)} needCheck={mock.HttpMethod !== "GET"} />}
                             </TabPanel>
                         })}

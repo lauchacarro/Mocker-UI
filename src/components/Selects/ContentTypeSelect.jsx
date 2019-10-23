@@ -27,7 +27,7 @@ const ContentTypeSelect = props => {
                 }}
             >
                 {contentTypes.map((contentType) => {
-                    return <MenuItem value={contentType.fullname}>{contentType.alias}</MenuItem>
+                    return <MenuItem key={contentType.fullname} value={contentType.fullname}>{contentType.alias}</MenuItem>
                 })}
             </Select>
         </FormControl>
