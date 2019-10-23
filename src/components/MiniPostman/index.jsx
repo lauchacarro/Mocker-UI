@@ -35,6 +35,7 @@ const MiniPostman = () => {
     const [requestMethod, setRequestMethod] = useState('GET')
     const [requestUrl, setRequestUrl] = useState('')
     const [requestRaw, setRequestRaw] = useState('')
+    const [requestBinaryFile, setRequestBinaryFile] = useState()
     const [requestBodyContentType, setRequestBodyContentType] = useState('application/json')
     const [response, setResponse] = useState({ body: '' })
     const [isLoading, setIsLoading] = useState(false)
@@ -94,7 +95,7 @@ const MiniPostman = () => {
 
     }
     const onUploadFile = file => {
-        setRequestRaw(file)
+        setRequestBinaryFile(file)
     }
 
     const makeRequestBody = () => {
@@ -120,8 +121,10 @@ const MiniPostman = () => {
                 body = formdata
                 break;
             case 3:
-            case 4:
                 body = requestRaw
+                break
+            case 4:
+                body = requestBinaryFile
                 break;
         }
 
@@ -257,6 +260,12 @@ const MiniPostman = () => {
                                                     </Paper>
                                                 </TabPanel>
                                                 <TabPanel value={tabRequestBodyValue} index={4}>
+                                                    {requestBinaryFile &&
+                                                        <Paper className={classes.root}>
+                                                            <Typography component="p">
+                                                                File: {requestBinaryFile.name}
+                                                            </Typography>
+                                                        </Paper>}
                                                     <DropzoneArea onUploadFile={onUploadFile} />
                                                 </TabPanel>
                                             </SwipeableViews>
