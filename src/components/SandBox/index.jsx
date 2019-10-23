@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Sandbox as ReactSandbox } from 'react-sandbox-editor'
+import PropTypes from 'prop-types';
 import './styles.css'
 
 const SandBox = props => {
@@ -72,5 +73,10 @@ const SandBox = props => {
   )
 }
 
+SandBox.propTypes = {
+  disable: PropTypes.bool,
+  handleChangeSandBox : PropTypes.func,
+  content : PropTypes.string
+}
 
 export default SandBox;

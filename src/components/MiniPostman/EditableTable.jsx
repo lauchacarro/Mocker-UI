@@ -1,5 +1,7 @@
 import React from 'react'
 import MaterialTable from 'material-table'
+import PropTypes from 'prop-types';
+
 class EditableTable extends React.Component {
 
     constructor(props) {
@@ -61,6 +63,16 @@ class EditableTable extends React.Component {
             />
         )
     }
+}
+
+EditableTable.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.exact({
+        key: PropTypes.string,
+        value: PropTypes.string
+    })),
+    title: PropTypes.string,
+    editable: PropTypes.bool,
+    handleTableUpdateData: PropTypes.func
 }
 
 export default EditableTable

@@ -10,6 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Close from '@material-ui/icons/Close';
 import useStyles from './styles'
 import { statusCodes } from '../../assets/statusCodes'
+import PropTypes from 'prop-types';
 
 const StatusCodeSelect = props => {
     const { disable, handleChangeStatusCode, value } = props
@@ -80,6 +81,12 @@ const StatusCodeSelect = props => {
             }
         </FormControl>
     )
+}
+
+StatusCodeSelect.propTypes = {
+    disable: PropTypes.bool,
+    handleChangeStatusCode: PropTypes.func,
+    value: PropTypes.number.isRequired
 }
 
 export default StatusCodeSelect

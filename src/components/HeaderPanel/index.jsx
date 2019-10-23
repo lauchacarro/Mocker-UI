@@ -5,6 +5,7 @@ import Add from '@material-ui/icons/Add';
 import clsx from 'clsx';
 import useStyles from './styles'
 import HeadersFields from './HeadersFields'
+import PropTypes from 'prop-types';
 
 const HeaderPanel = props => {
     const { disabled, handleChangeHeaders, headers } = props
@@ -64,7 +65,7 @@ const HeaderPanel = props => {
                                     autoComplete="off"
                                     InputProps={{
                                         endAdornment: (
-                                            <InputAdornment position = "end" >
+                                            <InputAdornment position="end" >
                                                 <IconButton
                                                     edge="end"
                                                     onClick={handleAddHeader}
@@ -72,9 +73,9 @@ const HeaderPanel = props => {
                                                     <Add />
                                                 </IconButton>
                                             </InputAdornment>
-                            ),
-                        }}
-                    />
+                                        ),
+                                    }}
+                                />
                             </Grid>
                         </Grid>
                         <HeadersFields handleRemoveHeader={handleRemoveHeader} headers={headersState} />
@@ -84,5 +85,16 @@ const HeaderPanel = props => {
         </div>
     )
 }
+
+HeaderPanel.propTypes = {
+    disabled: PropTypes.bool,
+    handleChangeHeaders: PropTypes.func,
+    headers: PropTypes.arrayOf(
+        PropTypes.exact({
+            key: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+        })
+    ).isRequired
+};
 
 export default HeaderPanel;

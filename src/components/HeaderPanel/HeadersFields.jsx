@@ -3,6 +3,7 @@ import React from 'react';
 import Remove from '@material-ui/icons/Remove';
 import clsx from 'clsx';
 import useStyles from './styles'
+import PropTypes from 'prop-types';
 
 const HeadersFields = props => {
 
@@ -48,6 +49,16 @@ const HeadersFields = props => {
             }
         </>
     )
+}
+
+HeadersFields.propTypes = {
+    headers: PropTypes.arrayOf(
+        PropTypes.exact({
+            key: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    handleRemoveHeader: PropTypes.func
 }
 
 export default HeadersFields

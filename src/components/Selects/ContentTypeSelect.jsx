@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import useStyles from './styles'
 import { contentTypes } from '../../assets/contentTypes'
+import PropTypes from 'prop-types';
 
 const ContentTypeSelect = props => {
     const { disable, handleChangeContentType, value } = props
@@ -31,6 +32,12 @@ const ContentTypeSelect = props => {
             </Select>
         </FormControl>
     )
+}
+
+ContentTypeSelect.propTypes = {
+    disable : PropTypes.bool,
+    handleChangeContentType: PropTypes.func,
+    value: PropTypes.string.isRequired
 }
 
 export default ContentTypeSelect

@@ -11,6 +11,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TabBodyHeader from '../Tabs/TabBodyHeader'
+import PropTypes from 'prop-types';
+
 
 const ExpansionPanelResponse = props => {
     const { response } = props
@@ -66,6 +68,17 @@ const ExpansionPanelResponse = props => {
             </ExpansionPanelDetails>
         </ExpansionPanel>
     )
+}
+
+ExpansionPanelResponse.propTypes = {
+    response: PropTypes.shape({
+        headers: PropTypes.array.isRequired,
+        body: PropTypes.string.isRequired,
+        time: PropTypes.string.isRequired,
+        statusCode: PropTypes.number.isRequired,
+        statusText: PropTypes.string,
+
+      }).isRequired
 }
 
 export default ExpansionPanelResponse;

@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ContentTypeSelect from '../Selects/ContentTypeSelect'
 import StatusCodeSelect from '../Selects/StatusCodeSelect'
 import HeaderPanel from '../HeaderPanel'
+import PropTypes from 'prop-types';
 
 const HttpMethodMock = props => {
     const { classes, handleChangeSandBox, handleChangeSelect, handleChangeSwitch, handleChangeHeaders, mock, needCheck } = props;
@@ -47,6 +48,28 @@ const HttpMethodMock = props => {
             </Grid>
         </Grid>
     )
+}
+
+HttpMethodMock.propTypes = {
+    handleChangeSandBox: PropTypes.func.isRequired,
+    handleChangeSelect: PropTypes.func.isRequired,
+    handleChangeSwitch: PropTypes.func.isRequired,
+    handleChangeHeaders: PropTypes.func.isRequired,
+    mock: PropTypes.exact({
+        Active: PropTypes.bool.isRequired,
+        Body: PropTypes.string.isRequired,
+        ContentType: PropTypes.string.isRequired,
+        StatusCode: PropTypes.number.isRequired,
+        Headers: PropTypes.arrayOf(
+            PropTypes.exact({
+                key: PropTypes.string.isRequired,
+                value: PropTypes.string.isRequired,
+            })
+        ).isRequired,
+        Charset: PropTypes.string.isRequired,
+        HttpMethod: PropTypes.string.isRequired
+    }).isRequired,
+    needCheck: PropTypes.bool
 }
 
 export default HttpMethodMock;

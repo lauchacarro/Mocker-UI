@@ -5,6 +5,7 @@ import useStyles from './styles'
 import Close from '@material-ui/icons/Close';
 import Add from '@material-ui/icons/Add';
 import { httpMethods } from '../../assets/httpmethods'
+import PropTypes from 'prop-types';
 
 const HttpMethodSelect = props => {
     const { disable = false, mini = false, handleMethodChange, value, currentMethods, handleSelectClose, title } = props
@@ -111,6 +112,17 @@ const HttpMethodSelect = props => {
             }
         </FormControl>
     )
+}
+
+HttpMethodSelect.propTypes = {
+    disable: PropTypes.bool,
+    mini: PropTypes.bool,
+    handleMethodChange: PropTypes.func,
+    value: PropTypes.string.isRequired,
+    currentMethods: PropTypes.arrayOf(PropTypes.string),
+    handleSelectClose: PropTypes.func,
+    title: PropTypes.string
+
 }
 
 export default HttpMethodSelect

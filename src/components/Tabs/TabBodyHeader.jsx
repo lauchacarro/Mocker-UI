@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Tabs, Tab } from '@material-ui/core'
 import AllTabProps from './AllTabProps'
+import PropTypes from 'prop-types';
 
 const TabBodyHeader = props => {
     const { color, onChange, value } = props
@@ -20,6 +21,12 @@ const TabBodyHeader = props => {
             </Tabs>
         </Grid>
     )
+}
+
+TabBodyHeader.propTypes = {
+    color: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.number.isRequired
 }
 
 export default TabBodyHeader;

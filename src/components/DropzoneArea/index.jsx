@@ -1,5 +1,6 @@
 import React from 'react'
 import ToyZone from "./ToyZone";
+import PropTypes from 'prop-types';
 
 const DropzoneArea = props => {
     const { onUploadFile } = props
@@ -15,5 +16,9 @@ const DropzoneArea = props => {
     );
 
 }
+
+DropzoneArea.propTypes = {
+    onUploadFile: PropTypes.func
+  };
 
 export default DropzoneArea
