@@ -105,7 +105,7 @@ const HttpMethodSelect = props => {
                         {httpMethods.filter((httpMethod) => {
                             return !currentMethods.includes(httpMethod.name)
                         }).map((httpMethod) => {
-                            return <MenuItem value={httpMethod.name}>{httpMethod.name}</MenuItem>
+                            return <MenuItem key={httpMethod.name} value={httpMethod.name}>{httpMethod.name}</MenuItem>
                         })}
                     </Select>
                 </>
