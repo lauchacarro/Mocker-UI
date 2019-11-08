@@ -25,6 +25,7 @@ import TabBodyHeader from '../Tabs/TabBodyHeader'
 import Loading from '../Loading'
 import ExpansionPanelResponse from './ExpansionPanelResponse'
 import SnackbarContent from '../CustomSnackbarContent'
+import { config } from '../Api/config'
 
 const MiniPostman = () => {
     const classes = useStyles();
@@ -141,7 +142,7 @@ const MiniPostman = () => {
     }
 
     const sendRequest = (e) => {
-        if (!requestUrl || requestUrl.replace(/ /g,'').length <= 0) {
+        if (!requestUrl || requestUrl.replace(/ /g, '').length <= 0) {
             setOpenAlert(true)
             return
         }
@@ -161,6 +162,8 @@ const MiniPostman = () => {
         if (tabRequestBodyValue == 4)
             headers.append("Content-Type", 'text/plain')
 
+        headers.append("Mocker-Url", requestUrl)
+
 
 
 
@@ -168,7 +171,7 @@ const MiniPostman = () => {
         let request = { method: requestMethod, headers: headers, body: body }
         console.log(request)
         let startTime = new Date();
-        fetch(requestUrl, request)
+        fetch(config.Url + "api/postman", request)
             .then(responsefetch => {
                 response.statusCode = responsefetch.status
                 response.statusText = responsefetch.statusText
